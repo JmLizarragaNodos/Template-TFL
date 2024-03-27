@@ -31,6 +31,42 @@ namespace MCTP_c_Modelos_de_Datos
 			};
 		}
 
+		public RespuestaSP TRAE_ESTADO_TFL(int p_def_tfl_ncorr, out DataTable dt)
+		{
+			dt = null;
+
+			try
+			{
+				IDataParameter[] param = new
+				{
+					p_def_tfl_ncorr
+				}.ToDataParameters(true);
+
+				param.AddOutput("outcur", OracleDbType.RefCursor);
+				param.AddOutput("p_swt", OracleDbType.Int32);
+				param.AddOutput("p_msg", OracleDbType.Varchar2, _msg_Size);
+				param.AddOutput("p_sts", OracleDbType.Varchar2, _sts_Size);
+				param.AddOutput("p_tbl", OracleDbType.Varchar2, _tbl_Size);
+				param.AddOutput("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
+
+				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.TRAE_ESTADO_TFL", ref param, ref dt);
+
+				return new RespuestaSP()
+				{
+					swt = param.ToIntValue("p_swt"),
+					msg = param.ToStringValue("p_msg"),
+					sts = param.ToStringValue("p_sts"),
+					tbl = param.ToStringValue("p_tbl"),
+					pkgp = param.ToStringValue("p_pkgp")
+				};
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+
+		/*
 		public RespuestaSP TRAE_ESTADO_TFL(int p_def_tfl_ncorr, out List<TRAE_ESTADO_TFL_ENT> outcur)
 		{
 			outcur = new List<TRAE_ESTADO_TFL_ENT>();
@@ -71,6 +107,7 @@ namespace MCTP_c_Modelos_de_Datos
 				throw new Exception(ex.Message);
 			}
 		}
+		*/
 
 		public RespuestaSP VOLVER_ATRAS
 		(

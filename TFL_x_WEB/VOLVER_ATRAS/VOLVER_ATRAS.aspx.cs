@@ -6,6 +6,7 @@ using MCTP_c_Modelos_de_Datos.Entity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -144,6 +145,36 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             RetornarJson(res);
         }
 
+        public class Card
+        {
+            public string titulo { get; set; }
+            public List<CardItem> items { get; set; }
+        }
+
+        public class CardItem
+        {
+            public string titulo { get; set; }
+        }
+
+        private static List<Card> ObtenerDatosDummy()
+        {
+            var listaObjetos = new List<Card>();
+
+            foreach (int x in new List<int>() { 1, 2, 3, 4 })
+            {
+                var items = new List<CardItem>();
+
+                foreach (var y in new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+                {
+                    items.Add(new CardItem { titulo = $"Pantalla {x}{y}" });
+                }
+
+                listaObjetos.Add(new Card { titulo = $"Etapa {x}", items = items });
+            }
+
+            return listaObjetos;
+        }
+
         [WebMethod]
         public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr)
         {
@@ -151,23 +182,24 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             try
             {
-                //if (estado == "Z") estado = null; 
-                //if (fechaEfectiva == "") fechaEfectiva = null; 
+                res.objeto = ObtenerDatosDummy();
 
+                /*
                 RespuestaSP resSP = _dataAccess.TRAE_ESTADO_TFL(
                     p_def_tfl_ncorr,   // p_def_tfl_ncorr 
-                    out List<TRAE_ESTADO_TFL_ENT> lista
+                    out DataTable dt
                 );
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                 {
-                    res.objeto = new Grilla() { data = lista };
+                    res.objeto = dt.ToObjectList();
                 }
                 else
                 {
                     string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
                     res.AgregarInternalServerError(msnError);
                 }
+                */
             }
             catch (Exception ex)
             {
@@ -184,7 +216,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         */
 
         [WebMethod]
-        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr, string p_audi_tusuario)
+        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -192,6 +224,8 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             {
                 //if (estado == "Z") estado = null; 
                 //if (fechaEfectiva == "") fechaEfectiva = null; 
+
+                string p_audi_tusuario = usuario.rutNumero.ToString();
 
                 RespuestaSP resSP = _dataAccess.VOLVER_ATRAS(
                     p_def_tfl_ncorr,   // p_def_tfl_ncorr 

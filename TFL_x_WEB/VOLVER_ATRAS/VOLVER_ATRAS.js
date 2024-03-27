@@ -142,11 +142,8 @@ function llenarSelectorDef_TFL()
 
 //#endregion Eventos Selectores Filtro
 
-function buscar()
+async function buscar()
 {
-    document.querySelector("#buscar").style.display = "none";
-    document.querySelector("#resultados").style.display = "block";
-
     // Colocar descripciones en la Cabecera
     let periodoVigencia = $("#buscar [name='periodoVigencia'] option:selected").text();
     let direccionSectorial = $("#buscar [name='direccionSectorial'] option:selected").text();
@@ -192,60 +189,82 @@ function buscar()
             errores.push("El sector productivo es requerido");
         */
 
-        //if (errores.length > 0) {
-        //    errores.reverse().forEach(x => toastr.error(x));
-        //    return;
-        //}
+        if (errores.length > 0) {
+            errores.reverse().forEach(x => toastr.error(x));
+            return;
+        }
     }
 
-    console.log(params);
-    construirCards();
+    showLoading();
+
+    try {
+        this.listaObjetos = await traeEstadoTFL(params.tfl);
+        console.log(this.listaObjetos);
+
+        document.querySelector("#buscar").style.display = "none";
+        document.querySelector("#resultados").style.display = "block";
+
+        //=====================>>>
+
+        let cadena = this.listaObjetos.map(x =>
+        {
+            return `<div class="col-md-3 mb-4">
+                <div class="card card-home">
+                    <div class="card-header">
+                        <h3 class="h3-responsive">${x.titulo}</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="list-card">
+
+                            ${x.items.map(y =>
+                            {
+                                return `<li class="mr-0 card-header d-flex align-items-baseline justify-content-between" id="iconos-hechos">
+                                    <div>
+                                        <i class="material-icons icon-lg mr-1 success-text">done</i>
+                                        <span class="d-md-inline">${y.titulo}</span>
+                                    </div>
+                                    <a href="#" data-toggle="modal" data-target="#ModalVolverAtras" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
+                                </li>`;
+                            }).join("")}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>`;
+        }).join("");
+
+        document.querySelector("#contenidoCards").innerHTML = cadena;
+
+        //=====================>>>
+    }
+    catch (ex) {
+        if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
+        else toastr.error(ex);
+    }
+    finally { hideLoading() }
 }
 
-function construirCards()
+function traeEstadoTFL(p_def_tfl_ncorr)
 {
-    this.listaObjetos = [1, 2, 3, 4].map(x =>
+    return new Promise((resolve, reject) => 
     {
-        return {
-            titulo: `Etapa ${x}`,
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9].map(y =>
+        $.ajax({
+            method: "POST",
+            url: "VOLVER_ATRAS.aspx/TRAE_ESTADO_TFL", 
+            data: JSON.stringify({ p_def_tfl_ncorr }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: (res) =>
             {
-                return {
-                    titulo: `Pantalla ${x}${y}`,
-                };
-            })
-        };
+                if (res.status == 200)
+                    resolve(res.objeto);
+                else 
+                    reject(res);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => reject("Ocurrió un error al obtener la información")
+        });
     });
-
-    let cadena = this.listaObjetos.map(x =>
-    {
-        return `<div class="col-md-3 mb-4">
-            <div class="card card-home">
-                <div class="card-header">
-                    <h3 class="h3-responsive">${x.titulo}</h3>
-                </div>
-
-                <div class="card-body">
-                    <ul class="list-card">
-
-                        ${x.items.map(y =>
-                        {
-                            return `<li class="mr-0 card-header d-flex align-items-baseline justify-content-between" id="iconos-hechos">
-                                <div>
-                                    <i class="material-icons icon-lg mr-1 success-text">done</i>
-                                    <span class="d-md-inline">${y.titulo}</span>
-                                </div>
-                                <a href="#" data-toggle="modal" data-target="#ModalVolverAtras" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
-                            </li>`;
-                        }).join("")}
-
-                    </ul>
-                </div>
-            </div>
-        </div>`;
-    }).join("");
-
-    document.querySelector("#contenidoCards").innerHTML = cadena;
 }
 
 //#region Funciones Generales
