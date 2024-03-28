@@ -23,10 +23,10 @@
   </script>
 
 <style>
+    /* Impedir textos enormes que desbordan la página */
+   /* p { word-break: break-word }   */
 
-  p { word-break: break-word }   /* Impedir textos enormes que desbordan la página */
-
-/*==============================================================*/
+    /*==============================================================*/
 
          .separator {
             height: 1px;
@@ -91,7 +91,7 @@
             font-size: 14px;
          }
 
-/*==============================================================*/
+    /*==============================================================*/
 
   .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before{
     border-top-color: #1565C0;  /* Flecha que une al tooltip con el elemento sobre el cual pasa el mouse */
@@ -270,11 +270,12 @@
             </span>
           </a>
           <li class="nav-item">
-            <a href="../Menu_Operacional/Menu_Operacional.aspx" class="nav-link waves-effect active">Men&uacute; Operacional</a>
+              <a href="#" class="nav-link waves-effect active">Men&uacute; Operacional</a>
+              <%--<a href="../Menu_Operacional/Menu_Operacional.aspx" class="nav-link waves-effect active">Men&uacute; Operacional</a>--%>
           </li>
-          <li class="nav-item">
+ <%--         <li class="nav-item">
             <a href="../Menu_Definiciones/Menu_Definiciones.aspx" class="nav-link waves-effect">Men&uacute; de Definiciones</a>
-          </li>
+          </li>--%>
         </ul>
       </div>
     </nav>
@@ -359,13 +360,11 @@
                 </div>
 
                 <div name="col-fecha-efectiva" class="col-12 col-md-4" style="visibility: hidden">
-                <div class="md-form">
-                    <p name="fechaEfectiva" class="form-control" style="border: none"></p>
-                    <label class="active">Fecha Efectiva</label>
+                    <div class="md-form">
+                        <p name="fechaEfectiva" class="form-control" style="border: none"></p>
+                        <label class="active">Fecha Efectiva</label>
+                    </div>
                 </div>
-                </div>
-
-
 
             </div>
                     
@@ -410,7 +409,7 @@
                 <div class="row">
                     <div class="col-12 d-flex align-items-end justify-content-between">
                         <h4 class="float-left heading h4-responsive mb-0">Buscar TFL para modificación</h4>
-                        <button onclick="btnNuevaBusqueda();" class="btn btn-outline waves-effect waves-light">
+                        <button onclick="realizarNuevaBusqueda()" class="btn btn-outline waves-effect waves-light">
                             <span>Hacer Nueva Búsqueda</span>
                         </button>
                     </div>
@@ -478,7 +477,7 @@
             <%-- ============================= --%>
 
             <div id="contenidoCards" class="row mt-3">
-
+                <%--
                 <div class="col-md-3 mb-4">
                     <div class="card card-home">
                         <div class="card-header">
@@ -726,7 +725,7 @@
                         </div>
                     </div>
                 </div>
-
+                --%>
             </div>
         
         </div>
@@ -748,280 +747,37 @@
     </div>
   </footer>
 
-  <div class="modal fade" id="ModalNuevaBusqueda" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-warning" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="row">
+  <div class="modal fade" id="ModalVolverAtras" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm modal-notify" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Volver Atr&aacute;s</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-center m-0">
+                                Est&aacute;s a punto de volver atr&aacute;s en el proceso. Recuerda que al volver atr&aacute;s, el proceso se reiniciar&aacute; desde fue seleccionado para volver atr&aacute;s, y el resto de los datos se
+                                guardar&aacute;n en modo borrador, as&iacute; que podr&aacute;s retomar justo donde lo dejaste en cualquier momento.
+                       
+                            </p>
+                            <p class="text-center m-0">
+                                &iquest;Est&aacute;s seguro de que deseas continuar con esta acci&oacute;n?
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="col-md-12">
-              <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
-              <p class="text-center m-0">
-                Si quieres agregar cualificaciones de otros sectores, recuerda guardar el borrador para no perder las
-                cualificaciones ya seleccionadas.
-              </p>
-            </div>
-
-          </div>
-        </div>
-        <div class="modal-footer justify-content-center">
-
-          <button class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
-
-          <button onclick="volverAtras()" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">No Guardar Borrador</button>
-
-          <button onclick="guardarBorrador_y_buscar()" class="btn mx-2 btn-default waves-effect waves-light alerta"
-          data-dismiss="modal">Guardar Borrador y Buscar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="ModalGuardarBorrador" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="heading lead">Guardar Borrador</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <div class="row mb-4">
-
-            <div class="col-md-12">
-              <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
-              <p class="text-center m-0">
-                <%= infoUsuario.msjGuardarBorrador %>
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-        <div class="modal-footer justify-content-between">
-          <div class="col-12 justify-content-center d-flex flex-wrap">
-            <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light"
-            data-dismiss="modal">Cancelar</button>
-
-            <button type="button" onclick="guardarBorrador()"
-            class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="ModalGuardarPublicar" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="heading lead">Guardar y Publicar</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <div class="row mb-4">
-
-            <div class="col-md-12">
-              <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
-              <p class="text-center m-0">
-                <%= infoUsuario.msjPublicar %>
-              </p>
-            </div>
-
-          </div>
-          <div class="row mb-4">
-
-            <div class="col-12 col-md-6 offset-3">
-                <div class="md-form mb-3">
-
-                    <input name="fechaPublicacion" type="text"
-                    class="datepicker-input form-control" placeholder="DD/MM/AAAA"
-                    data-position="bottom center" autocomplete="off" readonly="readonly" />
-
-                    <label class="active">Seleccione la fecha de Publicación</label>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">No, cancelar</button>
+                    <button type="button" onclick="volverAtras()" class="btn mx-2 btn-default waves-effect waves-light alerta">S&iacute;, volver atr&aacute;s</button>
                 </div>
             </div>
-
-          </div>
-
         </div>
-        <div class="modal-footer justify-content-between">
-          <div class="col-12 justify-content-center d-flex flex-wrap">
-            <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light"
-            data-dismiss="modal">Cancelar</button>
-
-            <button type="button" onclick="guardarPublicar()"
-            class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-
-  <div class="modal fade" id="ModalVerCualificacionesSeleccionadas" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="heading lead">Selección final de Cualificaciones de una TFL</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body px-0">
-
-          <div class="row">
-
-            <div class="col-12">
-
-              <div class="table-responsive">
-
-                <table id="TablaVerCualificacionesSeleccionadas"
-                  class="datatables table table-hover table-striped table-bordered m-0" width="100%">
-                  <thead>
-                    <tr>
-                        <th>Sector Productivo</th>
-                        <th>Sub Sector Productivo</th>
-                        <th>Ruta</th>
-                        <th>País</th>
-                        <th>Cualificación</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-        <div class="modal-footer px-0">
-          <button class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================================================================================== -->
-  <!-- modal detalle de la Cualificación -->
-
-  <div class="modal fade" id="ModalDetalle" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="heading lead" name="tituloModal">Detalle Cualificación - Lorem Ipsum Dolor sin Amet</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body px-0">
-
-          <div id="ver-detalle-cualificacion" class="row"></div>
-
-        </div>
-        <div class="modal-footer px-0">
-          <button class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================================================================================== -->
-  <!-- modal Perfiles Ocupacionales de la Cualificación -->
-
-  <div class="modal fade" id="ModalPerfiles" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="heading lead">Perfiles Ocupacionales de una Cualificaci&oacute;n</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body px-0">
-
-          <div class="row my-4">
-
-            <div class="col-12 col-md-12">
-              <div class="d-flex flex-wrap">
-                <p class="fb-100 fb-lg-32 mb-1">Cualificación:</p>
-                <p class="font-weight-bold mb-1 ml-3" name="cualificacion">xxx xxx xxx</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-12">
-              <div class="d-flex flex-wrap">
-                <p class="fb-100 fb-lg-32 mb-1">Versión Cualificación:</p>
-                <p class="font-weight-bold mb-1 ml-3" name="versionCualificacion">001</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-12">
-              <div class="d-flex flex-wrap">
-                <p class="fb-100 fb-lg-32 mb-1">Sector Productivo:</p>
-                <p class="font-weight-bold mb-1 ml-3" name="sectorProductivo">xxx xxx xxx</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-12">
-              <div class="d-flex flex-wrap">
-                <p class="fb-100 fb-lg-32 mb-1">Sub Sector Productivo:</p>
-                <p class="font-weight-bold mb-1 ml-3" name="subSectorProductivo">xxx xxx xxx</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-12">
-              <div class="d-flex flex-wrap">
-                <p class="fb-100 fb-lg-32 mb-1">Estado Cualificación:</p>
-                <p class="font-weight-bold mb-1 ml-3" name="estadoCualificacion">xxx xxx xxx</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-12">
-              <div class="d-flex flex-wrap">
-                <p class="fb-100 fb-lg-32 mb-1">Fecha Publicación:</p>
-                <p class="font-weight-bold mb-1 ml-3" name="fechaPublicacion">dd/mm/aa</p>
-              </div>
-            </div>
-
-          </div>
-          <div class="row">
-
-            <div class="col-12">
-
-              <div class="table-responsive">
-
-                <table id="TablaModalPerfiles" class="datatables table table-hover table-striped table-bordered m-0"
-                  width="100%">
-                  <thead>
-                    <tr>
-                      <th>Nivel del MCTP</th>
-                      <th>Código Perfil Ocupacional</th>
-                      <th>Nombre Perfil Ocupacional</th>
-                      <th>Estado Perfil Ocupacional</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-        <div class="modal-footer px-0">
-          <button class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="modal fade" id="ModalError" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md modal-notify modal-danger" role="document">

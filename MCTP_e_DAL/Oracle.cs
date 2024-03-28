@@ -24,7 +24,66 @@ namespace Inacap.Common.Dal
         {
             // string cadena = ObtenerCadena("DEF_TNMCTP_PKG.def_tnmctp_sel", param); 
 
-            string cadena = string.Empty;
+            Func<IDataParameter, string> keyValue = (x) =>
+            {
+                string valor = "NULL";
+
+                if (x.Value != null)
+                {
+                    if (x.Value is string)
+                        valor = $"'{x.Value.ToString()}'";
+                    else
+                        valor = x.Value.ToString();
+                }
+
+                if (valor == "") valor = "''";
+                if (x.ParameterName.ToLower().Contains("swt")) valor = "swt";
+                if (x.ParameterName.ToLower().Contains("msg")) valor = "msg";
+                if (x.ParameterName.ToLower().Contains("sts")) valor = "sts";
+                if (x.ParameterName.ToLower().Contains("tbl")) valor = "tbl";
+                if (x.ParameterName.ToLower().Contains("pkgp")) valor = "pkgp";
+                if (x.ParameterName.ToLower().Contains("outcur")) valor = "outcur";
+
+                return $"        {x.ParameterName} => {valor}";
+            };
+
+            string cadena = "";
+            cadena += "SET SERVEROUTPUT ON; \n\n";
+
+            cadena += "DECLARE \n";
+            cadena += "    swt number; \n";
+            cadena += "    msg varchar2(200); \n";
+            cadena += "    sts varchar2(200); \n";
+            cadena += "    tbl varchar2(200); \n";
+            cadena += "    pkgp varchar2(200); \n";
+
+            if (param.Any(x => x.ParameterName.ToLower().Contains("outcur")))
+                cadena += "    outcur SYS_REFCURSOR; \n";
+
+            cadena += "BEGIN \n";
+            cadena += $"    {nameStoredProcedure}( \n";
+            cadena += string.Join(", \n", param.Select(x => keyValue(x)));
+
+            cadena += "\n";
+            cadena += "    ); \n";
+
+            if (param.Any(x => x.ParameterName.ToLower().Contains("outcur")))
+            {
+                cadena += " \n";
+                cadena += "    IF outcur IS NOT NULL THEN \n";
+                cadena += "        DBMS_SQL.RETURN_RESULT(outcur); \n";
+                cadena += "    ELSE \n";
+                cadena += "        dbms_output.put_line('El cursor outcur no trae información'); \n";
+                cadena += "        dbms_output.put_line('swt: ' || swt); \n";
+                cadena += "        dbms_output.put_line('msg: ' || msg); \n";
+                cadena += "        dbms_output.put_line('sts: ' || sts); \n";
+                cadena += "        dbms_output.put_line('tbl: ' || tbl); \n";
+                cadena += "        dbms_output.put_line('pkgp: ' || pkgp); \n";
+                cadena += "    END IF; \n";
+            }
+
+            cadena += "END; \n";
+
             return cadena;
         }
 

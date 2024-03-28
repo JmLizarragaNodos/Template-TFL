@@ -112,6 +112,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             RetornarJson(res);
         }
 
+        /*
         [WebMethod]
         public static void GetDatosDefTFL(int? def_tfl_ncorr)  // Obtener datos de la tfl seleccionada en el filtro
         {
@@ -144,35 +145,20 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             RetornarJson(res);
         }
+        */
 
         public class Card
         {
             public string titulo { get; set; }
-            public List<CardItem> items { get; set; }
+            public List<CardItem> items { get; set; } = new List<CardItem>();
         }
 
         public class CardItem
         {
+            public bool estaPublicada { get; set; }  // Esto es para el check para mostrar que está lista en caso de que esté publicada
+            public bool puedeVolverAtras { get; set; }// Solamente los que están publicados pueden volver atras (Los que tienen fecha de publicación)
             public string titulo { get; set; }
-        }
-
-        private static List<Card> ObtenerDatosDummy()
-        {
-            var listaObjetos = new List<Card>();
-
-            foreach (int x in new List<int>() { 1, 2, 3, 4 })
-            {
-                var items = new List<CardItem>();
-
-                foreach (var y in new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
-                {
-                    items.Add(new CardItem { titulo = $"Pantalla {x}{y}" });
-                }
-
-                listaObjetos.Add(new Card { titulo = $"Etapa {x}", items = items });
-            }
-
-            return listaObjetos;
+            public string apli_caplicacion { get; set; }
         }
 
         [WebMethod]
@@ -182,9 +168,8 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             try
             {
-                res.objeto = ObtenerDatosDummy();
+                //res.objeto = ObtenerDatosDummy();
 
-                /*
                 RespuestaSP resSP = _dataAccess.TRAE_ESTADO_TFL(
                     p_def_tfl_ncorr,   // p_def_tfl_ncorr 
                     out DataTable dt
@@ -192,14 +177,35 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                 {
-                    res.objeto = dt.ToObjectList();
+                    var listaObjetos = new List<Card>();
+                    List<string> codigosSistemas = dt.ToListDistinct<string>("modulos_sist_ccod");  // ["ETAPA1", "ETAPA2", "ETAPA3", "ETAPA4"]
+
+                    foreach (string codigoSistema in codigosSistemas)
+                    {
+                        var card = new Card { titulo = codigoSistema };
+                        var dataTableItems = dt.FindByField(nombreCampo: "modulos_sist_ccod", valorCampo: codigoSistema);
+ 
+                        foreach (DataRow y in dataTableItems.Rows) 
+                        {
+                            card.items.Add(new CardItem
+                            {
+                                estaPublicada = (y.GetDataRowValue<int>("publicada") == 1),
+                                puedeVolverAtras = (y.GetDataRowValue<int>("volver_atras") == 1),
+                                titulo = y.GetDataRowValue<string>("app_descrip"),
+                                apli_caplicacion = y.GetDataRowValue<string>("apli_caplicacion"),
+                            });
+                        }
+
+                        listaObjetos.Add(card);
+                    }
+
+                    res.objeto = listaObjetos;
                 }
                 else
                 {
                     string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
                     res.AgregarInternalServerError(msnError);
                 }
-                */
             }
             catch (Exception ex)
             {
@@ -222,20 +228,19 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             try
             {
-                //if (estado == "Z") estado = null; 
-                //if (fechaEfectiva == "") fechaEfectiva = null; 
+                //res.mensajeExito = "Prueba Exito";
 
                 string p_audi_tusuario = usuario.rutNumero.ToString();
 
                 RespuestaSP resSP = _dataAccess.VOLVER_ATRAS(
                     p_def_tfl_ncorr,   // p_def_tfl_ncorr 
                     p_audi_tusuario    // p_audi_tusuario 
-                    //out List<VOLVER_ATRAS_ENT> lista
                 );
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                 {
                     // res.objeto = new Grilla() { data = lista };
+                    res.mensajeExito = "Exito";
                 }
                 else
                 {
@@ -251,6 +256,33 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             RetornarJson(res);
         }
+
+        /*
+        private static List<Card> ObtenerDatosDummy()
+        {
+            var listaObjetos = new List<Card>();
+
+            foreach (int x in new List<int>() { 1, 2, 3, 4 })
+            {
+                var items = new List<CardItem>();
+
+                foreach (var y in new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+                {
+                    bool estaPublicada = (y <= 7);
+
+                    items.Add(new CardItem {
+                        estaPublicada = estaPublicada,
+                        puedeVolverAtras = estaPublicada,
+                        titulo = $"Pantalla {x}{y}" 
+                    });
+                }
+
+                listaObjetos.Add(new Card { titulo = $"Etapa {x}", items = items });
+            }
+
+            return listaObjetos;
+        } 
+        */
 
         private static void RetornarJson(object res)
         {

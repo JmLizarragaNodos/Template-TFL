@@ -21,6 +21,7 @@ $(document).ready(function ()
 
 //#region Eventos Selectores Filtro
 
+/*
 $("#buscar [name='tfl']").on("change", () =>  // Obtener datos de la tfl seleccionada en el filtro
 {
     let tfl = $("#buscar [name='tfl']").val();
@@ -46,9 +47,6 @@ $("#buscar [name='tfl']").on("change", () =>  // Obtener datos de la tfl selecci
 
                     $("#buscar [name='fechaEfectiva']").html(o.def_tfl_fefect);
                     colFechaEfectiva.style.visibility = "visible";     // Hace visible la fecha efectiva
-
-                    // Coloca fecha efectiva en card de resultados de búsqueda
-                    $("#card-mostrar-filtros-seleccionados [name='fechaEfectiva']").html(o.def_tfl_fefect);
                 }
                 else {
                     mostrarErroresRespuestaBackend(res);
@@ -64,6 +62,7 @@ $("#buscar [name='tfl']").on("change", () =>  // Obtener datos de la tfl selecci
         colFechaEfectiva.style.visibility = "hidden";   // Oculta la fecha efectiva
     }
 });
+*/
 
 $("#buscar [name='direccionSectorial']").on("change", () =>  // Al seleccionar un option para filtrar por DIR_SEC_VRA
 {
@@ -200,9 +199,10 @@ async function buscar()
     try {
         this.listaObjetos = await traeEstadoTFL(params.tfl);
         console.log(this.listaObjetos);
+        //console.log(JSON.stringify(this.listaObjetos[0]));
 
-        document.querySelector("#buscar").style.display = "none";
-        document.querySelector("#resultados").style.display = "block";
+        $("#buscar").hide();
+        $("#resultados").show();
 
         //=====================>>>
 
@@ -219,12 +219,17 @@ async function buscar()
 
                             ${x.items.map(y =>
                             {
+                                let cssIconoCheck = (y.estaPublicada) ? "visibility: visible" : "visibility: hidden";
+                                let cssVolverAtras = (y.puedeVolverAtras) ? "visibility: visible" : "visibility: hidden";
+
                                 return `<li class="mr-0 card-header d-flex align-items-baseline justify-content-between" id="iconos-hechos">
                                     <div>
-                                        <i class="material-icons icon-lg mr-1 success-text">done</i>
+                                        <i style="${cssIconoCheck}" class="material-icons icon-lg mr-1 success-text">done</i>
                                         <span class="d-md-inline">${y.titulo}</span>
                                     </div>
-                                    <a href="#" data-toggle="modal" data-target="#ModalVolverAtras" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
+
+                                    <a href="#" onclick="abrirModalVolverAtras(event)" style="${cssVolverAtras}"
+                                    class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
                                 </li>`;
                             }).join("")}
 
@@ -245,6 +250,12 @@ async function buscar()
     finally { hideLoading() }
 }
 
+function realizarNuevaBusqueda()
+{
+    $("#buscar").show();
+    $("#resultados").hide();
+}
+
 function traeEstadoTFL(p_def_tfl_ncorr)
 {
     return new Promise((resolve, reject) => 
@@ -263,6 +274,58 @@ function traeEstadoTFL(p_def_tfl_ncorr)
                     reject(res);
             },
             error: (XMLHttpRequest, textStatus, errorThrown) => reject("Ocurrió un error al obtener la información")
+        });
+    });
+}
+
+function abrirModalVolverAtras(e)
+{
+    e.preventDefault();
+    $("#ModalVolverAtras").modal("show");
+}
+
+async function volverAtras()
+{
+    let p_def_tfl_ncorr = $("#buscar [name='tfl']").val();
+    console.log("p_def_tfl_ncorr", p_def_tfl_ncorr);
+
+    showLoading();
+
+    try {
+        let res = await VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr);
+        console.log(res);
+
+        toastr.success("Operación realizada con exito");
+        $("#ModalVolverAtras").modal("hide");
+        buscar();
+    }
+    catch (ex) {
+        if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
+        else toastr.error(ex);
+    }
+    finally { hideLoading() }
+}
+
+function VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr)
+{
+    return new Promise((resolve, reject) => 
+    {
+        $.ajax({
+            method: "POST",
+            url: "VOLVER_ATRAS.aspx/VOLVER_ATRAS_BACKEND",
+            data: JSON.stringify({ p_def_tfl_ncorr }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: (res) =>
+            {
+                if (res.status == 200) {
+                    resolve(res);
+                    //resolve(res.objeto);
+                }
+                else 
+                    reject(res);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => reject("Ocurrió un error al realizar la operación")
         });
     });
 }

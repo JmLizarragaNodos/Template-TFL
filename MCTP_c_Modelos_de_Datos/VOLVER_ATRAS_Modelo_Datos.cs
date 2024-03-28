@@ -49,6 +49,8 @@ namespace MCTP_c_Modelos_de_Datos
 				param.AddOutput("p_tbl", OracleDbType.Varchar2, _tbl_Size);
 				param.AddOutput("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
 
+				string cadena = ObtenerCadena("VOLVER_ATRAS_PKG.TRAE_ESTADO_TFL", param);
+
 				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.TRAE_ESTADO_TFL", ref param, ref dt);
 
 				return new RespuestaSP()
@@ -132,6 +134,8 @@ namespace MCTP_c_Modelos_de_Datos
 				param.AddOutput("p_sts", OracleDbType.Varchar2, _sts_Size);
 				param.AddOutput("p_tbl", OracleDbType.Varchar2, _tbl_Size);
 				param.AddOutput("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
+
+				string cadena = ObtenerCadena("VOLVER_ATRAS_PKG.VOLVER_ATRAS", param);
 
 				DataTable dt = null;
 				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.VOLVER_ATRAS", ref param, ref dt);
