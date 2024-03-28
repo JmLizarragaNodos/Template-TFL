@@ -716,40 +716,35 @@
         
         </div>
 
-
-
-
-        <div id="PROBANDO">
+<%--        <div id="PROBANDO">
             <div class="row mt-3">
                 <div class="col-md-3 mb-4">
                     <div class="card card-home">
                         <div class="card-header">
                             <h3 class="h3-responsive">QUITAR ESTO</h3>
                         </div>
-
                         <div class="card-body">
                             <ul class="list-card">
 
                                 <li class="mr-0 card-header d-flex align-items-baseline justify-content-between">
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td style="font-size: 1em">
-                                                    <i style="visibility: visible" class="material-icons icon-lg mr-1 success-text">done</i>
-                                                </td>
-                                                <td>
-                                                    <p style="font-size: 14px" class="d-md-inline">
-                                                        Descripción del Perfil Profesional de una TFL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                                                    </p>
-                                                </td>
-                                                <td style="font-size: 1em">
-                                                    <a href="#" onclick="abrirModalVolverAtras(event)" style="visibility: visible" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                   
+                                    <table>
+                                        <tr>
+                                            <td style="font-size: 1em">
+                                                <i style="visibility: visible" class="material-icons icon-lg mr-1 success-text">done</i>
+                                            </td>
+                                            <td>
+                                                <p style="font-size: 14px" class="d-md-inline">
+                                                    Probando
+                                                </p>
+                                            </td>
+                                            <td style="font-size: 1em">
+                                                <!-- Como puedo hacer que este icono quede alineado a la derecha del card -->
+                                                <a href="#" onclick="abrirModalVolverAtras(event)" style="visibility: visible" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                    </div>
-                
                                 </li>
 
                             </ul>
@@ -757,11 +752,7 @@
                     </div>
                 </div>
              </div>
-        </div>
-
-
-
-
+        </div>--%>
 
 
       </section>
@@ -804,12 +795,13 @@
                 </div>
 
                 <div class="modal-footer justify-content-center">
+                    <input type="hidden" name="apli_caplicacion" />
                     <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">No, cancelar</button>
                     <button type="button" onclick="volverAtras()" class="btn mx-2 btn-default waves-effect waves-light alerta">S&iacute;, volver atr&aacute;s</button>
                 </div>
             </div>
         </div>
-    </div>
+  </div>
 
   <div class="modal fade" id="ModalError" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md modal-notify modal-danger" role="document">

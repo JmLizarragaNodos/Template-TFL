@@ -227,15 +227,36 @@ async function buscar()
                                 let cssIconoCheck = (y.estaPublicada) ? "visibility: visible" : "visibility: hidden";
                                 let cssVolverAtras = (y.puedeVolverAtras) ? "visibility: visible" : "visibility: hidden";
 
+                                return `<li class="mr-0 card-header d-flex align-items-baseline justify-content-between">
+                               
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td style="width: 1em; font-size: 1em">
+                                                <i style="${cssIconoCheck}" class="material-icons icon-lg mr-1 success-text">done</i>
+                                            </td>
+                                            <td style="width: 83%">
+                                                <p style="font-size: 14px" class="d-md-inline">${y.titulo}</p>
+                                            </td>
+                                            <td style="font-size: 1em">
+                                                <a href="#" onclick="abrirModalVolverAtras(event, '${y.apli_caplicacion}')" style="${cssVolverAtras}"
+                                                class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </li>`;
+
+                                /*
                                 return `<li class="mr-0 card-header d-flex align-items-baseline justify-content-between" id="iconos-hechos">
                                     <div>
                                         <i style="${cssIconoCheck}" class="material-icons icon-lg mr-1 success-text">done</i>
                                         <span class="d-md-inline">${y.titulo}</span>
                                     </div>
 
-                                    <a href="#" onclick="abrirModalVolverAtras(event)" style="${cssVolverAtras}"
+                                    <a href="#" onclick="abrirModalVolverAtras(event, '${y.apli_caplicacion}')" style="${cssVolverAtras}"
                                     class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
                                 </li>`;
+                                */
                             }).join("")}
 
                         </ul>
@@ -283,9 +304,10 @@ function traeEstadoTFL(p_def_tfl_ncorr)
     });
 }
 
-function abrirModalVolverAtras(e)
+function abrirModalVolverAtras(e, apli_caplicacion)
 {
     e.preventDefault();
+    $("#ModalVolverAtras [name='apli_caplicacion']").val(apli_caplicacion);
     $("#ModalVolverAtras").modal("show");
 }
 
@@ -294,10 +316,13 @@ async function volverAtras()
     let p_def_tfl_ncorr = $("#buscar [name='tfl']").val();
     console.log("p_def_tfl_ncorr", p_def_tfl_ncorr);
 
+    let p_apli_caplicacion = $("#ModalVolverAtras [name='apli_caplicacion']").val();
+    console.log("p_apli_caplicacion", p_apli_caplicacion);
+
     showLoading();
 
     try {
-        let res = await VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr);
+        let res = await VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr, p_apli_caplicacion);
         console.log(res);
 
         toastr.success("Operación realizada con exito");
@@ -311,14 +336,14 @@ async function volverAtras()
     finally { hideLoading() }
 }
 
-function VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr)
+function VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr, p_apli_caplicacion)
 {
     return new Promise((resolve, reject) => 
     {
         $.ajax({
             method: "POST",
             url: "VOLVER_ATRAS.aspx/VOLVER_ATRAS_BACKEND",
-            data: JSON.stringify({ p_def_tfl_ncorr }),
+            data: JSON.stringify({ p_def_tfl_ncorr, p_apli_caplicacion }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: (res) =>

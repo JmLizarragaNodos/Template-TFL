@@ -229,32 +229,25 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             RetornarJson(res);
         }
 
-        /*
         [WebMethod]
-        public static void VOLVER_ATRAS(int p_def_tfl_ncorr, string p_audi_tusuario) 
-        */
-
-        [WebMethod]
-        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr)
+        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr, string p_apli_caplicacion)
         {
             RespuestaBackend res = new RespuestaBackend();
 
             try
             {
-                //res.mensajeExito = "Prueba Exito";
+                //throw new Exception("PRUEBA DETENER");
 
                 string p_audi_tusuario = usuario.rutNumero.ToString();
 
                 RespuestaSP resSP = _dataAccess.VOLVER_ATRAS(
-                    p_def_tfl_ncorr,   // p_def_tfl_ncorr 
-                    p_audi_tusuario    // p_audi_tusuario 
+                    p_def_tfl_ncorr,        // p_def_tfl_ncorr 
+                    p_apli_caplicacion,     // p_apli_caplicacion
+                    p_audi_tusuario         // p_audi_tusuario 
                 );
 
                 if (resSP.swt == 0 || resSP.swt == 1)
-                {
-                    // res.objeto = new Grilla() { data = lista };
-                    res.mensajeExito = "Exito";
-                }
+                    res.AgregarMensajeExito(resSP.msg);
                 else
                 {
                     string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
