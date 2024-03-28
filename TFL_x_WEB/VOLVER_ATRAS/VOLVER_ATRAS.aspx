@@ -24,7 +24,7 @@
 
 <style>
     /* Impedir textos enormes que desbordan la página */
-   /* p { word-break: break-word }   */
+    p { word-break: break-word }   
 
     /*==============================================================*/
 
@@ -270,12 +270,11 @@
             </span>
           </a>
           <li class="nav-item">
-              <a href="#" class="nav-link waves-effect active">Men&uacute; Operacional</a>
-              <%--<a href="../Menu_Operacional/Menu_Operacional.aspx" class="nav-link waves-effect active">Men&uacute; Operacional</a>--%>
+              <a href="#" class="nav-link waves-effect active">Menú Operacional</a>
           </li>
- <%--         <li class="nav-item">
-            <a href="../Menu_Definiciones/Menu_Definiciones.aspx" class="nav-link waves-effect">Men&uacute; de Definiciones</a>
-          </li>--%>
+          <li class="nav-item">
+            <a href="#" style="visibility: hidden" class="nav-link waves-effect">Menú de Definiciones</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -436,45 +435,32 @@
                             <span name="area">-</span>
                         </p>
                     </div>
+
+                 </div>
+                 <div class="row mb-4">
+
                     <div class="col-12 col-md-4">
                         <p>
                             <span class="font-weight-bold">TFL:</span> 
-                            <span name="tfl">-</span>
+                            <span name="nombre_tfl">-</span>
                         </p>
                     </div>
-                </div>
-                </div>
-            </div>
-
-            <%-- ============================= --%>
-
-            <%--            
-            <div class="row mt-3">
-                <div class="col-md-3 mb-4">
-                    <div class="card card-home">
-                        <div class="card-header">
-                            <h3 class="h3-responsive">Etapa 1</h3>
-                        </div>
-
-                        <div class="card-body">
-                            <ul class="list-card">
-
-                                <li class="mr-0 card-header d-flex align-items-baseline justify-content-between" id="iconos-hechos">
-                                    <div>
-                                        <i class="material-icons icon-lg mr-1 success-text">done</i>
-                                        <span class="d-md-inline">Seleccionar Cualificaciones para una TFL </span>
-                                    </div>
-                                    <a href="#" data-toggle="modal" data-target="#ModalVolverAtras" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <p>
+                            <span class="font-weight-bold">Estado:</span> 
+                            <span name="estado_tfl">-</span>
+                        </p>
                     </div>
+                    <div class="col-12 col-md-4">
+                        <p>
+                            <span class="font-weight-bold">Fecha Efectiva:</span> 
+                            <span name="fecha_efectiva_tfl">-</span>
+                        </p>
+                    </div>
+
+                </div>
                 </div>
             </div>
-            --%>
-
-            <%-- ============================= --%>
 
             <div id="contenidoCards" class="row mt-3">
                 <%--
@@ -730,7 +716,53 @@
         
         </div>
 
-        <%-- ========================================================================================================================= --%>
+
+
+
+        <div id="PROBANDO">
+            <div class="row mt-3">
+                <div class="col-md-3 mb-4">
+                    <div class="card card-home">
+                        <div class="card-header">
+                            <h3 class="h3-responsive">QUITAR ESTO</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <ul class="list-card">
+
+                                <li class="mr-0 card-header d-flex align-items-baseline justify-content-between">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 1em">
+                                                    <i style="visibility: visible" class="material-icons icon-lg mr-1 success-text">done</i>
+                                                </td>
+                                                <td>
+                                                    <p style="font-size: 14px" class="d-md-inline">
+                                                        Descripción del Perfil Profesional de una TFL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                                    </p>
+                                                </td>
+                                                <td style="font-size: 1em">
+                                                    <a href="#" onclick="abrirModalVolverAtras(event)" style="visibility: visible" class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+
+
+
+
 
       </section>
     </main>

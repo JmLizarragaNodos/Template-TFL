@@ -165,6 +165,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr)
         {
             RespuestaBackend res = new RespuestaBackend();
+            object infoTFL = new { };
 
             try
             {
@@ -177,14 +178,26 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                 {
+                    var primeraFila = dt.Rows[0];
+
+                    infoTFL = new {
+                        nombre_tfl = primeraFila.GetDataRowValue<string>("nombre_tfl"),
+                        estado_tfl = primeraFila.GetDataRowValue<string>("estado_tfl"),
+                        fecha_efectiva = primeraFila.GetDataRowValue<string>("fecha_efectiva")
+                    };
+
                     var listaObjetos = new List<Card>();
                     List<string> codigosSistemas = dt.ToListDistinct<string>("modulos_sist_ccod");  // ["ETAPA1", "ETAPA2", "ETAPA3", "ETAPA4"]
 
                     foreach (string codigoSistema in codigosSistemas)
                     {
-                        var card = new Card { titulo = codigoSistema };
                         var dataTableItems = dt.FindByField(nombreCampo: "modulos_sist_ccod", valorCampo: codigoSistema);
- 
+
+                        var card = new Card
+                        {
+                            titulo = dataTableItems.Rows[0].GetDataRowValue<string>("smenu_modulos_nombre")
+                        };
+
                         foreach (DataRow y in dataTableItems.Rows) 
                         {
                             card.items.Add(new CardItem
@@ -199,7 +212,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                         listaObjetos.Add(card);
                     }
 
-                    res.objeto = listaObjetos;
+                    res.objeto = new { listaObjetos, infoTFL };
                 }
                 else
                 {

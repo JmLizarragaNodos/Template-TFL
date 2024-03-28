@@ -147,11 +147,10 @@ async function buscar()
     let periodoVigencia = $("#buscar [name='periodoVigencia'] option:selected").text();
     let direccionSectorial = $("#buscar [name='direccionSectorial'] option:selected").text();
     let area = $("#buscar [name='area'] option:selected").text();
-    let tfl = $("#buscar [name='tfl'] option:selected").text();
+    //let tfl = $("#buscar [name='tfl'] option:selected").text();
     $("#resultados [name='periodoVigencia']").text(periodoVigencia);
     $("#resultados [name='direccionSectorial']").text(direccionSectorial);
     $("#resultados [name='area']").text(area);
-    $("#resultados [name='tfl']").text(tfl);
 
     let card = $("#buscar");
 
@@ -197,12 +196,18 @@ async function buscar()
     showLoading();
 
     try {
-        this.listaObjetos = await traeEstadoTFL(params.tfl);
-        console.log(this.listaObjetos);
-        //console.log(JSON.stringify(this.listaObjetos[0]));
+        let res = await traeEstadoTFL(params.tfl);
+        console.log(res);
 
+        this.listaObjetos = res.listaObjetos;
+        let infoTFL = res.infoTFL;
+        
         $("#buscar").hide();
         $("#resultados").show();
+
+        $("#resultados [name='nombre_tfl']").text(infoTFL.nombre_tfl);
+        $("#resultados [name='estado_tfl']").text(infoTFL.estado_tfl);
+        $("#resultados [name='fecha_efectiva_tfl']").text(infoTFL.fecha_efectiva);
 
         //=====================>>>
 
