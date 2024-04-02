@@ -77,7 +77,7 @@ namespace MCTP_c_Modelos_de_Datos
 					p_def_tfl_ncorr,
 					p_apli_caplicacion,
 					p_audi_tusuario
-				}.ToDataParameters(false);
+				}.ToDataParameters(true);
 
 				param.AddOutput("outcur", OracleDbType.RefCursor);
 				param.AddOutput("p_swt", OracleDbType.Int32);

@@ -224,16 +224,34 @@ async function buscar()
 
                             ${x.items.map(y =>
                             {
-                                let cssIconoCheck = (y.estaPublicada) ? "visibility: visible" : "visibility: hidden";
-                                let cssVolverAtras = (y.puedeVolverAtras) ? "visibility: visible" : "visibility: hidden";
+                                // Solamente los que están publicados pueden volver atras (Los que tienen fecha de publicación)
+
+                                let iconoCheck = "";
+
+                                if (y.publicada == 1) // Tiene Datos pero no está Publicado
+                                    iconoCheck = `<i class="material-icons icon-lg mr-1" style="color: #999292">done</i>`;
+                                
+                                if (y.publicada == 2) // Está Publicado
+                                    iconoCheck = `<i class="material-icons icon-lg mr-1 success-text">done</i>`;
+                                
+
+                                let cssVolverAtras = (y.publicada == 2) ? "visibility: visible" : "visibility: hidden";
+
+                                /*
+                                publicada:
+                                    0 NO TIENE DATOS
+                                    1 TIENE DATOS
+                                    2 PUBLICADO
+
+                                El volver atras debe estar habilitado solo cuando el publicada es 2 
+                                La columna  volver_atras   se va a eliminar
+                                */
 
                                 return `<li class="mr-0 card-header d-flex align-items-baseline justify-content-between">
                                
                                     <table style="width: 100%">
                                         <tr>
-                                            <td style="width: 1em; font-size: 1em">
-                                                <i style="${cssIconoCheck}" class="material-icons icon-lg mr-1 success-text">done</i>
-                                            </td>
+                                            <td style="width: 1em; font-size: 1em">${iconoCheck}</td>
                                             <td style="width: 83%">
                                                 <p style="font-size: 14px" class="d-md-inline">${y.titulo}</p>
                                             </td>
@@ -280,6 +298,7 @@ function realizarNuevaBusqueda()
 {
     $("#buscar").show();
     $("#resultados").hide();
+    llenarSelectorDef_TFL();
 }
 
 function traeEstadoTFL(p_def_tfl_ncorr)
@@ -325,7 +344,7 @@ async function volverAtras()
         let res = await VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr, p_apli_caplicacion);
         console.log(res);
 
-        toastr.success("Operación realizada con exito");
+        toastr.success(res.mensajeExito);
         $("#ModalVolverAtras").modal("hide");
         buscar();
     }

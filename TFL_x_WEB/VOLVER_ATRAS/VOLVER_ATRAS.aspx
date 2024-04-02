@@ -416,49 +416,69 @@
                 </div>
 
                 <div class="card-body">
-                <div class="row mb-4">
-                    <div class="col-12 col-md-4">
-                        <p>
-                            <span class="font-weight-bold">Periodo Diseño TFL:</span> 
-                            <span name="periodoVigencia">-</span>
-                        </p>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <p>
-                            <span class="font-weight-bold">Dirección Sectorial:</span> 
-                            <span name="direccionSectorial">-</span>
-                        </p>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <p>
-                            <span class="font-weight-bold">Área:</span> 
-                            <span name="area">-</span>
-                        </p>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4">
+                            <p>
+                                <span class="font-weight-bold">Periodo Diseño TFL:</span> 
+                                <span name="periodoVigencia">-</span>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p>
+                                <span class="font-weight-bold">Dirección Sectorial:</span> 
+                                <span name="direccionSectorial">-</span>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p>
+                                <span class="font-weight-bold">Área:</span> 
+                                <span name="area">-</span>
+                            </p>
+                        </div>
+
+                     </div>
+                     <div class="row mb-4">
+
+                        <div class="col-12 col-md-4">
+                            <p>
+                                <span class="font-weight-bold">TFL:</span> 
+                                <span name="nombre_tfl">-</span>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p>
+                                <span class="font-weight-bold">Estado:</span> 
+                                <span name="estado_tfl">-</span>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p>
+                                <span class="font-weight-bold">Fecha Efectiva:</span> 
+                                <span name="fecha_efectiva_tfl">-</span>
+                            </p>
+                        </div>
+
                     </div>
 
-                 </div>
-                 <div class="row mb-4">
+                    <hr />
 
-                    <div class="col-12 col-md-4">
-                        <p>
-                            <span class="font-weight-bold">TFL:</span> 
-                            <span name="nombre_tfl">-</span>
-                        </p>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4">
+                            <p class="d-flex align-items-center">
+                                <i class="material-icons mr-3 icon-lg success-text">done</i>Publicado
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p class="d-flex align-items-center">
+                                <i class="material-icons mr-3 icon-lg" style="color: #999292">done</i>Tiene Datos
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p class="d-flex align-items-center">
+                                <i class="material-icons icon-lg mr-3 info-text undo-icon">undo</i>Volver Atrás
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <p>
-                            <span class="font-weight-bold">Estado:</span> 
-                            <span name="estado_tfl">-</span>
-                        </p>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <p>
-                            <span class="font-weight-bold">Fecha Efectiva:</span> 
-                            <span name="fecha_efectiva_tfl">-</span>
-                        </p>
-                    </div>
-
-                </div>
                 </div>
             </div>
 

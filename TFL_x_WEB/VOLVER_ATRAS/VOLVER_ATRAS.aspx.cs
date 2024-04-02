@@ -155,8 +155,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
         public class CardItem
         {
-            public bool estaPublicada { get; set; }  // Esto es para el check para mostrar que está lista en caso de que esté publicada
-            public bool puedeVolverAtras { get; set; }// Solamente los que están publicados pueden volver atras (Los que tienen fecha de publicación)
+            public int publicada { get; set; } 
             public string titulo { get; set; }
             public string apli_caplicacion { get; set; }
         }
@@ -202,8 +201,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                         {
                             card.items.Add(new CardItem
                             {
-                                estaPublicada = (y.GetDataRowValue<int>("publicada") == 1),
-                                puedeVolverAtras = (y.GetDataRowValue<int>("volver_atras") == 1),
+                                publicada = y.GetDataRowValue<int>("publicada"),
                                 titulo = y.GetDataRowValue<string>("app_descrip"),
                                 apli_caplicacion = y.GetDataRowValue<string>("apli_caplicacion"),
                             });
@@ -245,6 +243,8 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                     p_apli_caplicacion,     // p_apli_caplicacion
                     p_audi_tusuario         // p_audi_tusuario 
                 );
+
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(resSP);
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                     res.AgregarMensajeExito(resSP.msg);
