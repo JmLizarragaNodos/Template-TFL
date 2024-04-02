@@ -48,7 +48,7 @@ namespace TFL_x_WEB.Helpers
         {
             return new USUARIO_ENT()
             {
-                nombre = "José Miguel",
+                nombre = "José Miguel (CAMBIAR ESTO)",
                 pers_ncorr = 3270864,
                 rutNumero = 17083122
                 //sesi_ccod = "168204134L262AAAI5ZAAAAABFTpAAAJ25232522023"
