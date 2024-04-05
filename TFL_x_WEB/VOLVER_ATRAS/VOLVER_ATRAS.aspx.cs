@@ -263,6 +263,25 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             RetornarJson(res);
         }
 
+        [WebMethod]
+        public static void ObtenerMensajeVolverAtras(string p_apli_caplicacion)
+        {
+            RespuestaBackend res = new RespuestaBackend();
+
+            try
+            {
+                var mensaje = "Estás a punto de volver atrás en el proceso. Recuerda que al volver atrás, el proceso se reiniciará desde donde fue seleccionado para volver atrás, y el resto de los datos se guardarán en modo borrador, así que podrás retomar justo donde lo dejaste en cualquier momento. ¿Estás seguro de que deseas continuar con esta acción?";
+                res.objeto = new { mensaje };
+            }
+            catch (Exception ex)
+            {
+                string msnError = LogException.WriteToEventLog(ex);
+                res.AgregarInternalServerError(msnError);
+            }
+
+            RetornarJson(res);
+        }
+
         /*
         private static List<Card> ObtenerDatosDummy()
         {

@@ -228,11 +228,21 @@ async function buscar()
 
                                 let iconoCheck = "";
 
+                                /*
                                 if (y.publicada == 1) // Tiene Datos pero no está Publicado
-                                    iconoCheck = `<i class="material-icons icon-lg mr-1" style="color: #999292">done</i>`;
+                                {
+                                    iconoCheck = `<i class="material-icons icon-lg mr-1" 
+                                    data-html="true" data-toggle="tooltip" data-placement="top" data-original-title="Tiene Datos"
+                                    style="color: #999292; font-weight: bold; cursor: pointer">done</i>`;
+                                }
+                                */
                                 
                                 if (y.publicada == 2) // Está Publicado
-                                    iconoCheck = `<i class="material-icons icon-lg mr-1 success-text">done</i>`;
+                                {
+                                    iconoCheck = `<i class="material-icons icon-lg mr-1 success-text" 
+                                    data-html="true" data-toggle="tooltip" data-placement="top" data-original-title="Publicado"
+                                    style="font-weight: bold; cursor: pointer">done</i>`;
+                                }
                                 
 
                                 let cssVolverAtras = (y.publicada == 2) ? "visibility: visible" : "visibility: hidden";
@@ -256,7 +266,9 @@ async function buscar()
                                                 <p style="font-size: 14px" class="d-md-inline">${y.titulo}</p>
                                             </td>
                                             <td style="font-size: 1em">
-                                                <a href="#" onclick="abrirModalVolverAtras(event, '${y.apli_caplicacion}')" style="${cssVolverAtras}"
+                                                <a href="#" onclick="abrirModalVolverAtras(event, '${y.apli_caplicacion}')" 
+                                                style="font-weight: bold; ${cssVolverAtras}"
+                                                data-html="true" data-toggle="tooltip" data-placement="top" data-original-title="Volver Atrás"
                                                 class="material-icons icon-lg ml-1 info-text undo-icon">undo</a>
                                             </td>
                                         </tr>
@@ -323,11 +335,49 @@ function traeEstadoTFL(p_def_tfl_ncorr)
     });
 }
 
-function abrirModalVolverAtras(e, apli_caplicacion)
+function obtenerMensajeVolverAtras(apli_caplicacion)
+{
+    return new Promise((resolve, reject) => 
+    {
+        $.ajax({
+            method: "POST",
+            url: "VOLVER_ATRAS.aspx/ObtenerMensajeVolverAtras",
+            data: JSON.stringify({ p_apli_caplicacion: apli_caplicacion }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: (res) =>
+            {
+                if (res.status == 200)
+                    resolve(res.objeto);
+                else 
+                    reject(res);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => reject("Ocurrió un error al obtener la información")
+        });
+    });
+}
+
+async function abrirModalVolverAtras(e, apli_caplicacion)
 {
     e.preventDefault();
-    $("#ModalVolverAtras [name='apli_caplicacion']").val(apli_caplicacion);
-    $("#ModalVolverAtras").modal("show");
+    let modal = $("#ModalVolverAtras");
+
+    showLoading();
+
+    try {
+        let res = await obtenerMensajeVolverAtras(apli_caplicacion);
+        //let mensaje = "Estás a punto de volver atrás en el proceso. Recuerda que al volver atrás, el proceso se reiniciará desde donde fue seleccionado para volver atrás, y el resto de los datos se guardarán en modo borrador, así que podrás retomar justo donde lo dejaste en cualquier momento. ¿Estás seguro de que deseas continuar con esta acción?";
+
+        modal.find("[name='contenido']").html(res.mensaje);
+
+        modal.find("[name='apli_caplicacion']").val(apli_caplicacion);
+        modal.modal("show");
+    }
+    catch (ex) {
+        if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
+        else toastr.error(ex);
+    }
+    finally { hideLoading() }
 }
 
 async function volverAtras()

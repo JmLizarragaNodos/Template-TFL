@@ -460,6 +460,7 @@
 
                     </div>
 
+                    <%--  
                     <hr />
 
                     <div class="row mb-4">
@@ -479,6 +480,8 @@
                             </p>
                         </div>
                     </div>
+                    --%>
+
                 </div>
             </div>
 
@@ -794,7 +797,7 @@
         <div class="modal-dialog modal-sm modal-notify" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <p class="heading lead">Volver Atr&aacute;s</p>
+                    <p class="heading lead">Volver Atrás</p>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -802,14 +805,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="text-center m-0">
-                                Est&aacute;s a punto de volver atr&aacute;s en el proceso. Recuerda que al volver atr&aacute;s, el proceso se reiniciar&aacute; desde fue seleccionado para volver atr&aacute;s, y el resto de los datos se
-                                guardar&aacute;n en modo borrador, as&iacute; que podr&aacute;s retomar justo donde lo dejaste en cualquier momento.
-                       
-                            </p>
-                            <p class="text-center m-0">
-                                &iquest;Est&aacute;s seguro de que deseas continuar con esta acci&oacute;n?
-                            </p>
+                            <p name="contenido" class="text-center m-0"></p>
+
+                            <%--<p class="text-center m-0">¿Estás seguro de que deseas continuar con esta acción?</p>--%>
                         </div>
                     </div>
                 </div>
@@ -817,7 +815,7 @@
                 <div class="modal-footer justify-content-center">
                     <input type="hidden" name="apli_caplicacion" />
                     <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">No, cancelar</button>
-                    <button type="button" onclick="volverAtras()" class="btn mx-2 btn-default waves-effect waves-light alerta">S&iacute;, volver atr&aacute;s</button>
+                    <button type="button" onclick="volverAtras()" class="btn mx-2 btn-default waves-effect waves-light alerta">Sí, volver atrás</button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 //importarArchivoJS("../MCTP_Diseño/sesion.js");
 
+console.log("AppVersion, 2024.04.05 v1.0");
+
 $("#appBody").adjustFontSize();   // Incrementar Tamaño de Fuente
 
 $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
