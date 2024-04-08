@@ -49,8 +49,6 @@ namespace MCTP_c_Modelos_de_Datos
 				param.AddOutput("p_tbl", OracleDbType.Varchar2, _tbl_Size);
 				param.AddOutput("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
 
-				string cadena = ObtenerCadena("VOLVER_ATRAS_PKG.TRAE_ESTADO_TFL", param);
-
 				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.TRAE_ESTADO_TFL", ref param, ref dt);
 
 				return new RespuestaSP()
@@ -86,10 +84,46 @@ namespace MCTP_c_Modelos_de_Datos
 				param.AddOutput("p_tbl", OracleDbType.Varchar2, _tbl_Size);
 				param.AddOutput("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
 
-				// string cadena = ObtenerCadena("VOLVER_ATRAS_PKG.VOLVER_ATRAS", param);
-
 				DataTable dt = null;
 				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.VOLVER_ATRAS", ref param, ref dt);
+
+				return new RespuestaSP()
+				{
+					swt = param.ToIntValue("p_swt"),
+					msg = param.ToStringValue("p_msg"),
+					sts = param.ToStringValue("p_sts"),
+					tbl = param.ToStringValue("p_tbl"),
+					pkgp = param.ToStringValue("p_pkgp")
+				};
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+
+		public RespuestaSP MSG_VOLVER_ATRAS(string p_apli_caplicacion)
+		{
+			try
+			{ 
+				IDataParameter[] param = new IDataParameter[6]; 
+
+				param[0] = new OracleParameter("p_apli_caplicacion", OracleDbType.Varchar2); 
+				param[1] = new OracleParameter("p_swt", OracleDbType.Int32); 
+				param[2] = new OracleParameter("p_msg", OracleDbType.Varchar2, _msg_Size); 
+				param[3] = new OracleParameter("p_sts", OracleDbType.Varchar2, _sts_Size); 
+				param[4] = new OracleParameter("p_tbl", OracleDbType.Varchar2, _tbl_Size); 
+				param[5] = new OracleParameter("p_pkgp", OracleDbType.Varchar2, _pkgp_Size); 
+
+				param[0].Value = p_apli_caplicacion; 
+				param[1].Direction = ParameterDirection.Output; 
+				param[2].Direction = ParameterDirection.Output; 
+				param[3].Direction = ParameterDirection.Output; 
+				param[4].Direction = ParameterDirection.Output; 
+				param[5].Direction = ParameterDirection.Output; 
+
+				DataTable dt = null;
+				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.MSG_VOLVER_ATRAS", ref param, ref dt);
 
 				return new RespuestaSP()
 				{

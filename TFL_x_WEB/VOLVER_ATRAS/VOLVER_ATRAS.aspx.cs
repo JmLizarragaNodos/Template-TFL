@@ -270,8 +270,8 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             try
             {
-                var mensaje = "Estás a punto de volver atrás en el proceso. Recuerda que al volver atrás, el proceso se reiniciará desde donde fue seleccionado para volver atrás, y el resto de los datos se guardarán en modo borrador, así que podrás retomar justo donde lo dejaste en cualquier momento. ¿Estás seguro de que deseas continuar con esta acción?";
-                res.objeto = new { mensaje };
+                RespuestaSP resSP = _dataAccess.MSG_VOLVER_ATRAS(p_apli_caplicacion);
+                res.objeto = new { mensaje = resSP.msg };
             }
             catch (Exception ex)
             {
