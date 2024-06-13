@@ -122,6 +122,7 @@ namespace TFL_x_WEB
                 }
                 else  // Si no es una llamada por Ajax
                 {
+                    /*
                     if (nombreClase != "Menu_Definiciones" && nombreClase != "Menu_Operacional")
                     {
                         if (!SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE))
@@ -134,6 +135,7 @@ namespace TFL_x_WEB
                             // Response.Redirect("https://localhost:44300/Menu_Definiciones/Menu_Definiciones.aspx");
                         }
                     }
+                    */
                 }
             }
         }

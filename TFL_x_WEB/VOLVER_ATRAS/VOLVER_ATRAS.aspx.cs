@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -27,6 +28,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         protected static List<COMBOBOX_ENT> periodosVigenciaTFL { get; set; }
         protected static List<COMBOBOX_ENT> dir_sec_vra { get; set; }
         protected static InfoUsuario infoUsuario = InfoUsuarioHelper.ObtenerInfoUsuario();
+        protected static string errorCarga { get; set; } = string.Empty;
 
         public VOLVER_ATRAS()
         {
@@ -41,21 +43,28 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            var dataAccessDefPvigencia = new DEF_PVIGENCIA_TFL_Modelo_Datos();
-            RespuestaSP resSP_DefPvigenciaTfl = dataAccessDefPvigencia.GetCombobox(out List<COMBOBOX_ENT> listaPeriodosVigenciaTFL);
+            try
+            {
+                var dataAccessDefPvigencia = new DEF_PVIGENCIA_TFL_Modelo_Datos();
+                RespuestaSP resSP_DefPvigenciaTfl = dataAccessDefPvigencia.GetCombobox(out List<COMBOBOX_ENT> listaPeriodosVigenciaTFL);
 
-            if (resSP_DefPvigenciaTfl.swt == 0)
-                periodosVigenciaTFL = listaPeriodosVigenciaTFL;
+                if (resSP_DefPvigenciaTfl.swt == 0)
+                    periodosVigenciaTFL = listaPeriodosVigenciaTFL;
 
-            RespuestaSP resSP_DefDirSecVra = _dataAccess_DEF_DIR_SEC_VRA.GetCombobox(out List<COMBOBOX_ENT> listaDefDirSecVra);
+                RespuestaSP resSP_DefDirSecVra = _dataAccess_DEF_DIR_SEC_VRA.GetCombobox(out List<COMBOBOX_ENT> listaDefDirSecVra);
 
-            if (resSP_DefDirSecVra.swt == 0 || resSP_DefDirSecVra.swt == 1)
-                dir_sec_vra = listaDefDirSecVra;
+                if (resSP_DefDirSecVra.swt == 0 || resSP_DefDirSecVra.swt == 1)
+                    dir_sec_vra = listaDefDirSecVra;
 
-            // No leer cache del navegador web
-            Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-            Response.AppendHeader("Pragma", "no-cache");
-            Response.AppendHeader("Expires", "0");
+                // No leer cache del navegador web
+                Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                Response.AppendHeader("Pragma", "no-cache");
+                Response.AppendHeader("Expires", "0");
+            }
+            catch (Exception ex)
+            {
+                errorCarga = ExceptionHelper.ToErrorPersonalizado(ex);
+            }
         }
 
         [WebMethod]
@@ -164,7 +173,6 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr)
         {
             RespuestaBackend res = new RespuestaBackend();
-            object infoTFL = new { };
 
             try
             {
@@ -175,48 +183,53 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                     out DataTable dt
                 );
 
-                if (resSP.swt == 0 || resSP.swt == 1)
-                {
-                    var primeraFila = dt.Rows[0];
+                //===================>>>>
+                // Sección solo para pruebas
 
-                    infoTFL = new {
-                        nombre_tfl = primeraFila.GetDataRowValue<string>("nombre_tfl"),
-                        estado_tfl = primeraFila.GetDataRowValue<string>("estado_tfl"),
-                        fecha_efectiva = primeraFila.GetDataRowValue<string>("fecha_efectiva")
+                int probar = 0;
+
+                if (probar == 1)
+                {
+                    resSP.swt = 2;
+                    resSP.msg = "Probando mensaje";
+                }
+
+                //===================>>>>
+
+                var primeraFila = dt.Rows[0];
+
+                object infoTFL = new {
+                    nombre_tfl = primeraFila.GetDataRowValue<string>("nombre_tfl"),
+                    estado_tfl = primeraFila.GetDataRowValue<string>("estado_tfl"),
+                    fecha_efectiva = primeraFila.GetDataRowValue<string>("fecha_efectiva")
+                };
+
+                var listaObjetos = new List<Card>();
+                List<string> codigosSistemas = dt.ToListDistinct<string>("modulos_sist_ccod");  // ["ETAPA1", "ETAPA2", "ETAPA3", "ETAPA4"]
+
+                foreach (string codigoSistema in codigosSistemas)
+                {
+                    var dataTableItems = dt.FindByField(nombreCampo: "modulos_sist_ccod", valorCampo: codigoSistema);
+
+                    var card = new Card
+                    {
+                        titulo = dataTableItems.Rows[0].GetDataRowValue<string>("smenu_modulos_nombre")
                     };
 
-                    var listaObjetos = new List<Card>();
-                    List<string> codigosSistemas = dt.ToListDistinct<string>("modulos_sist_ccod");  // ["ETAPA1", "ETAPA2", "ETAPA3", "ETAPA4"]
-
-                    foreach (string codigoSistema in codigosSistemas)
+                    foreach (DataRow y in dataTableItems.Rows) 
                     {
-                        var dataTableItems = dt.FindByField(nombreCampo: "modulos_sist_ccod", valorCampo: codigoSistema);
-
-                        var card = new Card
+                        card.items.Add(new CardItem
                         {
-                            titulo = dataTableItems.Rows[0].GetDataRowValue<string>("smenu_modulos_nombre")
-                        };
-
-                        foreach (DataRow y in dataTableItems.Rows) 
-                        {
-                            card.items.Add(new CardItem
-                            {
-                                publicada = y.GetDataRowValue<int>("publicada"),
-                                titulo = y.GetDataRowValue<string>("app_descrip"),
-                                apli_caplicacion = y.GetDataRowValue<string>("apli_caplicacion"),
-                            });
-                        }
-
-                        listaObjetos.Add(card);
+                            publicada = y.GetDataRowValue<int>("publicada"),
+                            titulo = y.GetDataRowValue<string>("app_descrip"),
+                            apli_caplicacion = y.GetDataRowValue<string>("apli_caplicacion"),
+                        });
                     }
 
-                    res.objeto = new { listaObjetos, infoTFL };
+                    listaObjetos.Add(card);
                 }
-                else
-                {
-                    string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
-                    res.AgregarInternalServerError(msnError);
-                }
+
+                res.objeto = new { listaObjetos, infoTFL, resSP };
             }
             catch (Exception ex)
             {

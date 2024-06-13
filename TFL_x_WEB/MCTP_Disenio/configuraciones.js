@@ -1,6 +1,6 @@
-//importarArchivoJS("../MCTP_Diseño/sesion.js");
+//importarArchivoJS("../MCTP_Disenio/sesion.js");
 
-console.log("AppVersion, 2024.04.08 v1.0");
+console.log("AppVersion, 2024.04.08 v1.1");
 
 $("#appBody").adjustFontSize();   // Incrementar Tamaño de Fuente
 

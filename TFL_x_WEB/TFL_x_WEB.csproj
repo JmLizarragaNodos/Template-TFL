@@ -114,17 +114,17 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="MCTP_Diseño\bootstrap.min.js" />
-    <Content Include="MCTP_Diseño\chosen.jquery.js" />
-    <Content Include="MCTP_Diseño\configuraciones.js" />
-    <Content Include="MCTP_Diseño\datatables.min.js" />
-    <Content Include="MCTP_Diseño\datepicker.js" />
-    <Content Include="MCTP_Diseño\jquery-3.3.1.min.js" />
-    <Content Include="MCTP_Diseño\logo_inacap.png" />
-    <Content Include="MCTP_Diseño\mdb.min.js" />
-    <Content Include="MCTP_Diseño\popper.min.js" />
-    <Content Include="MCTP_Diseño\sesion.js" />
-    <Content Include="MCTP_Diseño\xlsx.full.min.js" />
+    <Content Include="MCTP_Disenio\bootstrap.min.js" />
+    <Content Include="MCTP_Disenio\chosen.jquery.js" />
+    <Content Include="MCTP_Disenio\configuraciones.js" />
+    <Content Include="MCTP_Disenio\datatables.min.js" />
+    <Content Include="MCTP_Disenio\datepicker.js" />
+    <Content Include="MCTP_Disenio\jquery-3.3.1.min.js" />
+    <Content Include="MCTP_Disenio\logo_inacap.png" />
+    <Content Include="MCTP_Disenio\mdb.min.js" />
+    <Content Include="MCTP_Disenio\popper.min.js" />
+    <Content Include="MCTP_Disenio\sesion.js" />
+    <Content Include="MCTP_Disenio\xlsx.full.min.js" />
     <Content Include="Menu_Definiciones\Menu_Definiciones.aspx" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
@@ -165,6 +165,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CryptoHelper.cs" />
+    <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\ExtensionHelper.cs" />
     <Compile Include="Helpers\InfoUsuarioHelper.cs" />
     <Compile Include="Helpers\LinqHelper.cs" />

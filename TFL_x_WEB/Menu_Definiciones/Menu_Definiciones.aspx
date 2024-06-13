@@ -365,15 +365,15 @@
   </div>
     
     
-    <script src="../MCTP_Diseño/jquery-3.3.1.min.js"></script>
-    <script src="../MCTP_Diseño/popper.min.js"></script>
-    <script src="../MCTP_Diseño/bootstrap.min.js"></script>
-    <script src="../MCTP_Diseño/mdb.min.js"></script>
-    <script src="../MCTP_Diseño/chosen.jquery.js"></script>
-    <script src="../MCTP_Diseño/datepicker.js"></script>
-    <script src="../MCTP_Diseño/datatables.min.js"></script>
-    <script src="../MCTP_Diseño/xlsx.full.min.js"></script>
-    <script src="../MCTP_Diseño/configuraciones.js"></script>
+    <script src="../MCTP_Disenio/jquery-3.3.1.min.js"></script>
+    <script src="../MCTP_Disenio/popper.min.js"></script>
+    <script src="../MCTP_Disenio/bootstrap.min.js"></script>
+    <script src="../MCTP_Disenio/mdb.min.js"></script>
+    <script src="../MCTP_Disenio/chosen.jquery.js"></script>
+    <script src="../MCTP_Disenio/datepicker.js"></script>
+    <script src="../MCTP_Disenio/datatables.min.js"></script>
+    <script src="../MCTP_Disenio/xlsx.full.min.js"></script>
+    <script src="../MCTP_Disenio/configuraciones.js"></script>
 
     <script>
         const obtenerUltimaVersion = () => console.log("7-3-2024 a las 10:28");

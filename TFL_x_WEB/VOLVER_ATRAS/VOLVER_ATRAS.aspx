@@ -458,7 +458,17 @@
                             </p>
                         </div>
 
-                    </div>
+                     </div>
+                     <div class="row mb-4">
+
+                        <div class="col-12 d-flex justify-content-start">
+                            <div id="mensaje" style="visibility: hidden;" class="text-small flex-md-row flex-column legends select d-flex">
+                                <i class="material-icons mr-4 icon-lg" style="color: #c00; margin-right: 0px !important; font-size: 1.7em !important"></i>
+                                <p class="mx-2 m-0 text-center" style="color: #c00; margin-top: 1px !important"></p>
+                            </div>
+                        </div>
+
+                     </div>
 
                     <%--  
                     <hr />
@@ -846,15 +856,19 @@
         </div>
     </div>
 
-  <script src="../MCTP_Diseño/jquery-3.3.1.min.js"></script>
-  <script src="../MCTP_Diseño/popper.min.js"></script>
-  <script src="../MCTP_Diseño/bootstrap.min.js"></script>
-  <script src="../MCTP_Diseño/mdb.min.js"></script>
-  <script src="../MCTP_Diseño/chosen.jquery.js"></script>
-  <script src="../MCTP_Diseño/datepicker.js"></script>
-  <script src="../MCTP_Diseño/datatables.min.js"></script>
-  <script src="../MCTP_Diseño/xlsx.full.min.js"></script>
-  <script src="../MCTP_Diseño/configuraciones.js"></script>
+  <script src="../MCTP_Disenio/jquery-3.3.1.min.js"></script>
+  <script src="../MCTP_Disenio/popper.min.js"></script>
+  <script src="../MCTP_Disenio/bootstrap.min.js"></script>
+  <script src="../MCTP_Disenio/mdb.min.js"></script>
+  <script src="../MCTP_Disenio/chosen.jquery.js"></script>
+  <script src="../MCTP_Disenio/datepicker.js"></script>
+  <script src="../MCTP_Disenio/datatables.min.js"></script>
+  <script src="../MCTP_Disenio/xlsx.full.min.js"></script>
+  <script src="../MCTP_Disenio/configuraciones.js"></script>
+
+  <script>
+      const errorCarga = `<%= errorCarga %>`;
+  </script>
   
   <script src="VOLVER_ATRAS.js"></script>
 

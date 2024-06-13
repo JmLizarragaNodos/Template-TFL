@@ -15,8 +15,11 @@ $(document).ready(function ()
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-
     $('.mdb-select').material_select();
+
+    if (errorCarga != "") {
+        mostrarErroresRespuestaBackend({ objeto: null, errores: [errorCarga], status: 500 });
+    }
 });
 
 //#region Eventos Selectores Filtro
@@ -197,10 +200,19 @@ async function buscar()
 
     try {
         let res = await traeEstadoTFL(params.tfl);
-        console.log(res);
+        // console.log(res);
 
         this.listaObjetos = res.listaObjetos;
         let infoTFL = res.infoTFL;
+        let habilitadoVolverAtras = true;
+
+        if (res.resSP.swt == 2) 
+        {
+            habilitadoVolverAtras = false;
+            definirMensaje({ mostrar: true, icono: "lock", mensaje: res.resSP.msg });
+        }
+        else 
+            definirMensaje({ mostrar: false });
         
         $("#buscar").hide();
         $("#resultados").show();
@@ -244,8 +256,7 @@ async function buscar()
                                     style="font-weight: bold; cursor: pointer">done</i>`;
                                 }
                                 
-
-                                let cssVolverAtras = (y.publicada == 2) ? "visibility: visible" : "visibility: hidden";
+                                let cssVolverAtras = (y.publicada == 2 && habilitadoVolverAtras) ? "visibility: visible" : "visibility: hidden";
 
                                 /*
                                 publicada:
@@ -427,6 +438,36 @@ function VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr, p_apli_caplicacion)
             error: (XMLHttpRequest, textStatus, errorThrown) => reject("Ocurrió un error al realizar la operación")
         });
     });
+}
+
+function definirMensaje(datos = {})
+{
+    // definirMensaje({ mostrar: false });
+    // definirMensaje({ mostrar: true, icono: "warning", mensaje: "Hay duplicados. Revisar" });
+    // definirMensaje({ mostrar: true, icono: "lock", mensaje: "No se puede modificar" });
+
+    let querySelector = datos.querySelector ?? "#resultados #mensaje";
+    let mensajeNoModificar = document.querySelector(querySelector);
+
+    if (datos.mostrar && datos.mensaje != null)
+    {
+        mensajeNoModificar.style.cssText = "visibility: visible";  // Muestra mensaje "Análisis de Demanda publicada, no se puede modificar"
+        let p = Array.from(mensajeNoModificar.children).find(x => x.tagName.toLowerCase() == "p");
+        let i = Array.from(mensajeNoModificar.children).find(x => x.tagName.toLowerCase() == "i");
+
+        p.textContent = datos.mensaje;
+        i.textContent = datos.icono ?? "error";
+
+        let color = (datos.icono == "warning") ?
+            "#ffa000"   // Amarillo
+            : "#c00";   // Rojo
+
+        p.style.color = color;
+        i.style.color = color;
+    }
+    else {
+        mensajeNoModificar.style.cssText = "visibility: hidden";
+    }
 }
 
 //#region Funciones Generales
