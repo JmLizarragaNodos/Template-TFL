@@ -355,6 +355,31 @@
           </div>
         </div>
     </div>--%>
+
+    <div class="modal fade" id="ModalError" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-notify modal-danger" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Se encontró un error. Por favor contacte a la mesa de ayuda</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="red-text">
+                                <p name="mensaje-error"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-rigth">
+                    <a data-dismiss="modal" class="btn btn-default waves-effect waves-light alerta">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
   
   
   <!-- Loading Overlay -->
@@ -376,7 +401,13 @@
     <script src="../MCTP_Disenio/configuraciones.js"></script>
 
     <script>
-        const obtenerUltimaVersion = () => console.log("7-3-2024 a las 10:28");
+        const errorCarga = `<%= errorCarga %>`;
+
+        $(document).ready(function ()
+        {
+            if (errorCarga != "") 
+                mostrarErroresRespuestaBackend({ objeto: null, errores: [errorCarga], status: 500 });
+        });
 
         function tflProcesarAplicacion(evento, apli_caplicacion)
         {

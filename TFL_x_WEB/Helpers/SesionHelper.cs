@@ -236,42 +236,28 @@ namespace TFL_x_WEB.Helpers
             */
 
             int rut = GetUsuario().rutNumero;
+            string p_cacplicacion = $"TFL_{nombreTabla}";     // "TFL_DEF_SPRODUCTIVOS"
 
-            try
+            TFL_MODULOS_ACCESOS_Modelo_Datos dataAccess = new TFL_MODULOS_ACCESOS_Modelo_Datos();
+
+            RespuestaSP resSP = dataAccess.TFL_MODULOS_ACCESOS(
+                "TFL", "ETAPA1", rut, p_cacplicacion, out List<TFL_MODULOS_ACCESOS_ENT> datosDB
+            );
+
+            if (resSP.swt == 0 || resSP.swt == 1)
             {
-                string p_cacplicacion = $"TFL_{nombreTabla}";     // "TFL_DEF_SPRODUCTIVOS"
+                bool autorizado = false;
 
-                TFL_MODULOS_ACCESOS_Modelo_Datos dataAccess = new TFL_MODULOS_ACCESOS_Modelo_Datos();
-
-                RespuestaSP resSP = dataAccess.TFL_MODULOS_ACCESOS(
-                    "TFL", "ETAPA1", rut, p_cacplicacion, out List<TFL_MODULOS_ACCESOS_ENT> datosDB
-                );
-
-                if (resSP.swt == 0 || resSP.swt == 1)
+                foreach (Permisos permiso in permisos)
                 {
-                    bool autorizado = false;
+                    if (permiso == Permisos.SELECT && datosDB.Any(x => x.permiso == "SELECT"))
+                        autorizado = true;
 
-                    foreach (Permisos permiso in permisos)
-                    {
-                        if (permiso == Permisos.SELECT && datosDB.Any(x => x.permiso == "SELECT"))
-                            autorizado = true;
-
-                        if (permiso == Permisos.UPDATE && datosDB.Any(x => x.permiso == "UPDATE"))
-                            autorizado = true;
-                    }
-
-                    return autorizado;
+                    if (permiso == Permisos.UPDATE && datosDB.Any(x => x.permiso == "UPDATE"))
+                        autorizado = true;
                 }
-                else
-                {
-                    //mensajeError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
-                    //statusError = 500;
-                }
-            }
-            catch (Exception ex)
-            {
-                //mensajeError = LogException.WriteToEventLog(ex);
-                //statusError = 500;
+
+                return autorizado;
             }
 
             return false;

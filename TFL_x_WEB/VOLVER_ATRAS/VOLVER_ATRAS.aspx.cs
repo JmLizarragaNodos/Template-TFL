@@ -22,21 +22,15 @@ namespace TFL_x_WEB.VOLVER_ATRAS
     {
         private static VOLVER_ATRAS_Modelo_Datos _dataAccess;
         protected static DEF_DIR_SEC_VRA_Modelo_Datos _dataAccess_DEF_DIR_SEC_VRA;
-        protected static USUARIO_ENT usuario { get; set; }
-        protected static List<ENTRADAS_ENT> entradas { get; set; }
-        protected static List<COMBOBOX_ENT> sectoresProductivos { get; set; }
+        protected static USUARIO_ENT usuario { get; set; } = new USUARIO_ENT();
         protected static List<COMBOBOX_ENT> periodosVigenciaTFL { get; set; }
         protected static List<COMBOBOX_ENT> dir_sec_vra { get; set; }
-        protected static InfoUsuario infoUsuario = InfoUsuarioHelper.ObtenerInfoUsuario();
         protected static string errorCarga { get; set; } = string.Empty;
 
         public VOLVER_ATRAS()
         {
             _dataAccess = new VOLVER_ATRAS_Modelo_Datos();
             _dataAccess_DEF_DIR_SEC_VRA = new DEF_DIR_SEC_VRA_Modelo_Datos();
-            usuario = SesionHelper.GetUsuario();
-            entradas = new List<ENTRADAS_ENT>();
-            sectoresProductivos = new List<COMBOBOX_ENT>();
             periodosVigenciaTFL = new List<COMBOBOX_ENT>();
             dir_sec_vra = new List<COMBOBOX_ENT>();
         }
@@ -45,6 +39,8 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         {
             try
             {
+                usuario = SesionHelper.GetUsuario();
+
                 var dataAccessDefPvigencia = new DEF_PVIGENCIA_TFL_Modelo_Datos();
                 RespuestaSP resSP_DefPvigenciaTfl = dataAccessDefPvigencia.GetCombobox(out List<COMBOBOX_ENT> listaPeriodosVigenciaTFL);
 

@@ -22,120 +22,136 @@ namespace TFL_x_WEB
 
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
-            /*
-            Metodos que usan Copiar
+            bool esAjax = false;
 
-                Def analisis demanda
-                    DEF_ADEMANDA_COPIAR
-
-                Def perfil profesional
-                    DEF_PPROF_COPIAR
-
-                Def lvc 
-                    DEF_LVC_COPIAR
-            */
-
-            string validarAutorizacion = ConfigurationManager.AppSettings["validarAutorizacion"];
-
-            if (!string.IsNullOrEmpty(validarAutorizacion))
+            try
             {
-                string nombreMetodo = Request.Path.Remove(0, Request.Path.LastIndexOf("/") + 1);
+                string validarAutorizacion = ConfigurationManager.AppSettings["validarAutorizacion"];
 
-                string nombreClase = Path.GetFileName(Request.PhysicalPath)?
-                    .Replace(".aspx", "")
-                    .Replace(".asmx", "")
-                    .Replace("_Service", "");
-
-                bool autorizado = false;
-
-                if (IsAjaxRequest(HttpContext.Current.Request))
+                if (!string.IsNullOrEmpty(validarAutorizacion))
                 {
-                    //===============================================>>>>>
+                    string nombreMetodo = Request.Path.Remove(0, Request.Path.LastIndexOf("/") + 1);
 
-                    if (nombreClase == "Login")  // Permitir renovar sesión
-                        return;
+                    string nombreClase = Path.GetFileName(Request.PhysicalPath)?
+                        .Replace(".aspx", "")
+                        .Replace(".asmx", "")
+                        .Replace("_Service", "");
 
-                    //===============================================>>>>>
-                    // Prueba para usar Token de Autenticación
-                    /*
-                    if (nombreClase == "Login")  // Permitir Login
-                        return;
+                    bool autorizado = false;
 
-                    // Validar Token
-
-                    string bearerToken = HttpContext.Current.Request.Headers["X-Bearer-Token"];
-
-                    if (!string.IsNullOrEmpty(bearerToken))
+                    if (IsAjaxRequest(HttpContext.Current.Request))
                     {
-                        bool estaEncriptado = CryptoHelper.TryDesencriptar(bearerToken, out var jsonStringDesencriptado);
+                        esAjax = true;
 
-                        if (estaEncriptado)
+                        //===============================================>>>>>
+
+                        if (nombreClase == "Login")  // Permitir renovar sesión
+                            return;
+
+                        //===============================================>>>>>
+                        // Prueba para usar Token de Autenticación
+                        /*
+                        if (nombreClase == "Login")  // Permitir Login
+                            return;
+
+                        // Validar Token
+
+                        string bearerToken = HttpContext.Current.Request.Headers["X-Bearer-Token"];
+
+                        if (!string.IsNullOrEmpty(bearerToken))
                         {
-                            // Convertir de nuevo a objeto
-                            var objetoObtenido = JsonConvert.DeserializeObject<InfoTFL>(jsonStringDesencriptado);
+                            bool estaEncriptado = CryptoHelper.TryDesencriptar(bearerToken, out var jsonStringDesencriptado);
 
-                            // Hacer algo con el objeto obtenido
-                            Console.WriteLine(objetoObtenido.usuario.nombre);
+                            if (estaEncriptado)
+                            {
+                                // Convertir de nuevo a objeto
+                                var objetoObtenido = JsonConvert.DeserializeObject<InfoTFL>(jsonStringDesencriptado);
+
+                                // Hacer algo con el objeto obtenido
+                                Console.WriteLine(objetoObtenido.usuario.nombre);
+                            }
+                            else
+                            {
+                                Console.WriteLine("jsonStringEncriptado no tiene el formato correcto");
+                            }
+                        }
+                        */
+                        //===============================================>>>>>
+
+                        string tipo = ObtenerUltimosCaracteres(nombreMetodo.ToUpper(), 4);
+
+                        if (nombreMetodo == "TFL_PROCESAR_APLICACION")   // Si es para saltar de una aplicación a otra
+                        {
+                            autorizado = true;
+                        }
+                        else if (
+                            nombreMetodo.Contains("_GRABAR") || nombreMetodo.Contains("_EDITAR") || nombreMetodo.Contains("_COPIAR") ||
+                            tipo == "_GRA" || tipo == "_UPD" || tipo == "_DEL"
+                        )
+                        {
+                            autorizado = SesionHelper.EstaAutorizado(nombreClase, Permisos.UPDATE);
+                        }
+                        else if (nombreMetodo.Contains("_BUSCAR") || tipo == "_SEL" || tipo == "_LEE")
+                        {
+                            autorizado = SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE);
                         }
                         else
                         {
-                            Console.WriteLine("jsonStringEncriptado no tiene el formato correcto");
+                            autorizado = SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE);
+                        }
+
+                        if (!autorizado)
+                        {
+                            RespuestaBackend resError = new RespuestaBackend();
+                            resError.NoAutorizado();
+
+                            string json = JsonConvert.SerializeObject(resError);
+                            HttpContext.Current.Response.Clear();
+                            HttpContext.Current.Response.ContentType = "application/json; charset=utf-8";
+                            HttpContext.Current.Response.Write(json);
+                            HttpContext.Current.Response.Flush();
+                            HttpContext.Current.Response.End();
                         }
                     }
-                    */
-                    //===============================================>>>>>
+                    else  // Si no es una llamada por Ajax
+                    {
+                        /*
+                        if (nombreClase != "Menu_Definiciones" && nombreClase != "Menu_Operacional")
+                        {
+                            if (!SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE))
+                            {
+                                string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+                                    Request.ApplicationPath.TrimEnd('/');
 
-                    string tipo = ObtenerUltimosCaracteres(nombreMetodo.ToUpper(), 4);
+                                Response.Redirect($"{baseUrl}/Menu_Definiciones/Menu_Definiciones.aspx");
 
-                    if (nombreMetodo == "TFL_PROCESAR_APLICACION")   // Si es para saltar de una aplicación a otra
-                    {
-                        autorizado = true;
-                    }
-                    else if (
-                        nombreMetodo.Contains("_GRABAR") || nombreMetodo.Contains("_EDITAR") || nombreMetodo.Contains("_COPIAR") ||
-                        tipo == "_GRA" || tipo == "_UPD" || tipo == "_DEL"
-                    )
-                    {
-                        autorizado = SesionHelper.EstaAutorizado(nombreClase, Permisos.UPDATE);
-                    }
-                    else if (nombreMetodo.Contains("_BUSCAR") || tipo == "_SEL" || tipo == "_LEE")
-                    {
-                        autorizado = SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE);
-                    }
-                    else
-                    {
-                        autorizado = SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE);
-                    }
-
-                    if (!autorizado)
-                    {
-                        RespuestaBackend resError = new RespuestaBackend();
-                        resError.NoAutorizado();
-
-                        string json = JsonConvert.SerializeObject(resError);
-                        HttpContext.Current.Response.Clear();
-                        HttpContext.Current.Response.ContentType = "application/json; charset=utf-8";
-                        HttpContext.Current.Response.Write(json);
-                        HttpContext.Current.Response.Flush();
-                        HttpContext.Current.Response.End();
+                                // Response.Redirect("https://localhost:44300/Menu_Definiciones/Menu_Definiciones.aspx");
+                            }
+                        }
+                        */
                     }
                 }
-                else  // Si no es una llamada por Ajax
+            }
+            catch (Exception ex)
+            {
+                string errorCarga = ExceptionHelper.ToErrorPersonalizado(ex);
+
+                if (!esAjax)
                 {
-                    /*
-                    if (nombreClase != "Menu_Definiciones" && nombreClase != "Menu_Operacional")
-                    {
-                        if (!SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE))
-                        {
-                            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
-                                Request.ApplicationPath.TrimEnd('/');
+                    string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
+                    Response.Redirect($"{baseUrl}/INTERNAL_SERVER_ERROR/INTERNAL_SERVER_ERROR.aspx?errorCarga={errorCarga}");
+                }
+                else
+                {
+                    RespuestaBackend res = new RespuestaBackend();
+                    res.AgregarInternalServerError(errorCarga);
 
-                            Response.Redirect($"{baseUrl}/Menu_Definiciones/Menu_Definiciones.aspx");
-
-                            // Response.Redirect("https://localhost:44300/Menu_Definiciones/Menu_Definiciones.aspx");
-                        }
-                    }
-                    */
+                    string json = JsonConvert.SerializeObject(res);
+                    HttpContext.Current.Response.Clear();
+                    HttpContext.Current.Response.ContentType = "application/json; charset=utf-8";
+                    HttpContext.Current.Response.Write(json);
+                    HttpContext.Current.Response.Flush();
+                    HttpContext.Current.Response.End();
                 }
             }
         }

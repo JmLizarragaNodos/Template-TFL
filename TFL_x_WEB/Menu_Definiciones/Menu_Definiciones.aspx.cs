@@ -17,14 +17,13 @@ namespace TFL_x_WEB.Menu_Definiciones
 {
     public partial class Menu_Definiciones : Page
     {
-        protected static USUARIO_ENT usuario { get; set; }
+        protected static USUARIO_ENT usuario { get; set; } = new USUARIO_ENT();
         protected static string cadenaMenu { get; set; }
         protected static string cadenaSubMenu { get; set; }
         protected string errorCarga { get; set; }
 
         public Menu_Definiciones()
         {
-            //==============================================>>>>>
             /*
             var objeto = new EjemploAuth
             {
@@ -56,9 +55,6 @@ namespace TFL_x_WEB.Menu_Definiciones
                 Console.WriteLine("jsonStringEncriptado no tiene el formato correcto");
             }
             */
-            //==============================================>>>>>
-
-            usuario = SesionHelper.GetUsuario();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -67,6 +63,8 @@ namespace TFL_x_WEB.Menu_Definiciones
 
             try
             {
+                usuario = SesionHelper.GetUsuario();
+
                 List<MenuAcceso> listaPrincipal = SesionHelper.ObtenerInfoMenuAcceso(
                     "ETAPA1",
                     "Menú de Definiciones",
@@ -138,7 +136,8 @@ namespace TFL_x_WEB.Menu_Definiciones
             }
             catch (Exception ex)
             {
-                errorCarga = LogException.WriteToEventLog(ex);
+                errorCarga = ExceptionHelper.ToErrorPersonalizado(ex);
+                //errorCarga = LogException.WriteToEventLog(ex);
             }
 
 
