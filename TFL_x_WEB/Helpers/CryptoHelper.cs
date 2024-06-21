@@ -4,6 +4,15 @@ using System.Security.Cryptography;
 
 namespace TFL_x_WEB.Helpers
 {
+    public class EjemploAuth
+    {
+        public string nombre { get; set; }
+        public int rutNumero { get; set; }
+        public string sesi_ccod { get; set; }
+        public int pers_ncorr { get; set; }
+        public PermisosAuth permisosAuth { get; set; }
+    }
+
     public class InfoTFL 
     {
         public USUARIO_ENT usuario { get; set; }

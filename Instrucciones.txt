@@ -1,13 +1,12 @@
 
+Usar esto para evitar problemas con Checkmarx:
+	Newtonsoft.Json 13.0.3
+	
+=========================================================================>>>>>
+
 Rutas en localhost:
 https://localhost:44335/Menu_Definiciones/Menu_Definiciones.aspx
 https://localhost:44335/VOLVER_ATRAS/VOLVER_ATRAS.aspx
 
 IIS:
 https://siga.desa.inacap.cl/TFL/VOLVER_ATRAS/VOLVER_ATRAS.aspx
-
-
-Cambiar 
-	MCTP_Diseño
-	por
-	MCTP_Disenio
