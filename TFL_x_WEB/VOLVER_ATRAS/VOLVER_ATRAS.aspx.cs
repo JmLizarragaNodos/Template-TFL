@@ -253,7 +253,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                     p_audi_tusuario         // p_audi_tusuario 
                 );
 
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(resSP);
+                var jsonString = JsonConvert.SerializeObject(resSP);
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                     res.AgregarMensajeExito(resSP.msg);

@@ -2,7 +2,7 @@
 Aplicación web desarrollada para Inacap en ASP.NET (.NET Framework)
 
 ### Ruta para respaldo de código fuente con SVN
-https://svn.inacap.cl/desarrollo/DESARROLLO/Trancura/TFL
+https://svn.inacap.cl/desarrollo/DESARROLLO/Trancura/TFL.FUENTES
 
 ### Ruta para Publicar en desa
 https://svn.inacap.cl/desa-iis8/trunk/TFL

@@ -70,6 +70,51 @@ namespace MCTP_c_Modelos_de_Datos
 		{
 			try
 			{
+				IDataParameter[] param = new IDataParameter[9]; 
+
+				param[0] = new OracleParameter("p_def_tfl_ncorr", OracleDbType.Int32); 
+				param[1] = new OracleParameter("p_apli_caplicacion", OracleDbType.Varchar2); 
+				param[2] = new OracleParameter("p_audi_tusuario", OracleDbType.Varchar2); 
+				param[3] = new OracleParameter("outcur", OracleDbType.RefCursor); 
+				param[4] = new OracleParameter("p_swt", OracleDbType.Int32); 
+				param[5] = new OracleParameter("p_msg", OracleDbType.Varchar2, _msg_Size); 
+				param[6] = new OracleParameter("p_sts", OracleDbType.Varchar2, _sts_Size); 
+				param[7] = new OracleParameter("p_tbl", OracleDbType.Varchar2, _tbl_Size); 
+				param[8] = new OracleParameter("p_pkgp", OracleDbType.Varchar2, _pkgp_Size); 
+
+				param[0].Value = p_def_tfl_ncorr; 
+				param[1].Value = p_apli_caplicacion; 
+				param[2].Value = p_audi_tusuario; 
+				param[3].Direction = ParameterDirection.Output; 
+				param[4].Direction = ParameterDirection.Output; 
+				param[5].Direction = ParameterDirection.Output; 
+				param[6].Direction = ParameterDirection.Output; 
+				param[7].Direction = ParameterDirection.Output; 
+				param[8].Direction = ParameterDirection.Output; 
+
+				DataTable dt = null;
+				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.VOLVER_ATRAS", ref param, ref dt);
+
+				return new RespuestaSP() 
+				{ 
+					swt = int.Parse(param[4].Value.ToString()), 
+					msg = param[5].Value.ToString(), 
+					sts = param[6].Value.ToString(), 
+					tbl = param[7].Value.ToString(), 
+					pkgp = param[8].Value.ToString(), 
+				}; 
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+
+		/*
+		public RespuestaSP VOLVER_ATRAS(int p_def_tfl_ncorr, string p_apli_caplicacion, string p_audi_tusuario)  // Correcto
+		{
+			try
+			{
 				IDataParameter[] param = new
 				{
 					p_def_tfl_ncorr,
@@ -101,6 +146,53 @@ namespace MCTP_c_Modelos_de_Datos
 				throw new Exception(ex.Message);
 			}
 		}
+		*/
+
+		/*
+		public RespuestaSP VOLVER_ATRAS(int p_def_tfl_ncorr, string p_audi_tusuario)  // No está correcto
+		{
+			try
+			{
+				IDataParameter[] param = new IDataParameter[8];
+
+				param[0] = new OracleParameter("p_def_tfl_ncorr", OracleDbType.Int32);
+				param[1] = new OracleParameter("p_audi_tusuario", OracleDbType.Varchar2);
+				param[2] = new OracleParameter("p_swt", OracleDbType.Int32);
+				param[3] = new OracleParameter("p_msg", OracleDbType.Varchar2, _msg_Size);
+				param[4] = new OracleParameter("p_sts", OracleDbType.Varchar2, _sts_Size);
+				param[5] = new OracleParameter("p_tbl", OracleDbType.Varchar2, _tbl_Size);
+				param[6] = new OracleParameter("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
+				param[7] = new OracleParameter("p_def_tfl_ncorr_n", OracleDbType.Int32);
+
+				param[0].Value = p_def_tfl_ncorr;
+				param[1].Value = p_audi_tusuario;
+				param[2].Direction = ParameterDirection.Output;
+				param[3].Direction = ParameterDirection.Output;
+				param[4].Direction = ParameterDirection.Output;
+				param[5].Direction = ParameterDirection.Output;
+				param[6].Direction = ParameterDirection.Output;
+				param[7].Direction = ParameterDirection.Output;
+
+				DataTable dt = null;
+				ExecuteStoredProcedure("VOLVER_ATRAS_PKG.VOLVER_ATRAS", ref param, ref dt);
+
+				string p_def_tfl_ncorr_n = param[7].Value.ToString();
+
+				return new RespuestaSP()
+				{
+					swt = int.Parse(param[2].Value.ToString()),
+					msg = param[3].Value.ToString(),
+					sts = param[4].Value.ToString(),
+					tbl = param[5].Value.ToString(),
+					pkgp = param[6].Value.ToString(),
+				};
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		} 
+		*/
 
 		public RespuestaSP MSG_VOLVER_ATRAS(string p_apli_caplicacion)
 		{
