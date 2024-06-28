@@ -136,23 +136,15 @@ namespace TFL_x_WEB
             {
                 string errorCarga = ExceptionHelper.ToErrorPersonalizado(ex);
 
-                if (!esAjax)
-                {
-                    string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
-                    Response.Redirect($"{baseUrl}/INTERNAL_SERVER_ERROR/INTERNAL_SERVER_ERROR.aspx?errorCarga={errorCarga}");
-                }
-                else
-                {
-                    RespuestaBackend res = new RespuestaBackend();
-                    res.AgregarInternalServerError(errorCarga);
+                RespuestaBackend res = new RespuestaBackend();
+                res.AgregarInternalServerError(errorCarga);
 
-                    string json = JsonConvert.SerializeObject(res);
-                    HttpContext.Current.Response.Clear();
-                    HttpContext.Current.Response.ContentType = "application/json; charset=utf-8";
-                    HttpContext.Current.Response.Write(json);
-                    HttpContext.Current.Response.Flush();
-                    HttpContext.Current.Response.End();
-                }
+                string json = JsonConvert.SerializeObject(res);
+                HttpContext.Current.Response.Clear();
+                HttpContext.Current.Response.ContentType = "application/json; charset=utf-8";
+                HttpContext.Current.Response.Write(json);
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
             }
         }
 

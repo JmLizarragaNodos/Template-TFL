@@ -114,7 +114,6 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="INTERNAL_SERVER_ERROR\INTERNAL_SERVER_ERROR.aspx" />
     <Content Include="MCTP_Disenio\bootstrap.min.js" />
     <Content Include="MCTP_Disenio\chosen.jquery.js" />
     <Content Include="MCTP_Disenio\configuraciones.js" />
@@ -126,8 +125,6 @@
     <Content Include="MCTP_Disenio\popper.min.js" />
     <Content Include="MCTP_Disenio\sesion.js" />
     <Content Include="MCTP_Disenio\xlsx.full.min.js" />
-    <Content Include="Menu_Definiciones\Menu_Definiciones.aspx" />
-    <Content Include="PROBANDO\PROBANDO.aspx" />
     <Content Include="Properties\PublishProfiles\FolderProfile.pubxml.user" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
@@ -162,40 +159,14 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Grilla.cs" />
     <Compile Include="Dto\MenuAcceso.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\ExtensionHelper.cs" />
-    <Compile Include="Helpers\InfoUsuarioHelper.cs" />
     <Compile Include="Helpers\LinqHelper.cs" />
     <Compile Include="Helpers\SesionHelper.cs" />
-    <Compile Include="Helpers\TextosHelper.cs" />
-    <Compile Include="Helpers\UtilHelper.cs" />
-    <Compile Include="INTERNAL_SERVER_ERROR\INTERNAL_SERVER_ERROR.aspx.cs">
-      <DependentUpon>INTERNAL_SERVER_ERROR.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="INTERNAL_SERVER_ERROR\INTERNAL_SERVER_ERROR.aspx.designer.cs">
-      <DependentUpon>INTERNAL_SERVER_ERROR.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Menu_Definiciones\Menu_Definiciones.aspx.cs">
-      <DependentUpon>Menu_Definiciones.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Menu_Definiciones\Menu_Definiciones.aspx.designer.cs">
-      <DependentUpon>Menu_Definiciones.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PROBANDO\PROBANDO.aspx.cs">
-      <DependentUpon>PROBANDO.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PROBANDO\PROBANDO.aspx.designer.cs">
-      <DependentUpon>PROBANDO.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
