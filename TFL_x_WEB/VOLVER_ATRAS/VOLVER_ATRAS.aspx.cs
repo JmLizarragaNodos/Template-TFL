@@ -1,5 +1,4 @@
 ﻿using Inacap.LogginException;
-using Inacap.Validators;
 using MCTP_a_Exception;
 using MCTP_c_Modelos_de_Datos;
 using MCTP_c_Modelos_de_Datos.Entity;
@@ -7,13 +6,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using TFL_x_WEB.Dto;
 using TFL_x_WEB.Helpers;
 
 namespace TFL_x_WEB.VOLVER_ATRAS
@@ -64,7 +59,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         }
 
         [WebMethod]
-        public static void GetCboDefArea(int direccionSectorialNcorr)
+        public static void DEF_AREA_SEL(int direccionSectorialNcorr)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -74,7 +69,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                 RespuestaSP resSP = dataAccess.GetCombobox(direccionSectorialNcorr, out List<COMBOBOX_ENT> lista);
 
                 if (resSP.swt == 0 || resSP.swt == 1)
-                    res.objeto = new { cboCboDefArea = lista };
+                    res.objeto = lista;
                 else
                 {
                     string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
@@ -91,7 +86,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         }
 
         [WebMethod]
-        public static void GetCboDefTFL(int defAreaNcorr, int defPvigenciaTFL_ncorr)
+        public static void DEF_TFL_SEL(int defAreaNcorr, int defPvigenciaTFL_ncorr)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -101,7 +96,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                 RespuestaSP resSP = dataAccess.GetCombobox(defAreaNcorr, defPvigenciaTFL_ncorr, out List<COMBOBOX_ENT> lista);
 
                 if (resSP.swt == 0 || resSP.swt == 1)
-                    res.objeto = new { cboDefTFL = lista };
+                    res.objeto = lista;
                 else
                 {
                     string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
@@ -116,41 +111,6 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             RetornarJson(res);
         }
-
-        /*
-        [WebMethod]
-        public static void GetDatosDefTFL(int? def_tfl_ncorr)  // Obtener datos de la tfl seleccionada en el filtro
-        {
-            RespuestaBackend res = new RespuestaBackend();
-            var dataAccess = new DEF_TFL_Modelo_Datos();
-
-            try
-            {
-                RespuestaSP resSP = dataAccess.GetDatosDefTFL(
-                    def_tfl_ncorr.Value,
-                    out string def_tfl_nombre,
-                    out string def_tfl_descrip,
-                    out string def_tfl_version,
-                    out string def_tfl_fefect
-                );
-
-                if (resSP.swt == 0 || resSP.swt == 1)
-                    res.objeto = new { def_tfl_nombre, def_tfl_descrip, def_tfl_version, def_tfl_fefect };
-                else
-                {
-                    string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
-                    res.AgregarInternalServerError(msnError);
-                }
-            }
-            catch (Exception ex)
-            {
-                string msnError = LogException.WriteToEventLog(ex);
-                res.AgregarInternalServerError(msnError);
-            }
-
-            RetornarJson(res);
-        }
-        */
 
         public class Card
         {
@@ -172,25 +132,10 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             try
             {
-                //res.objeto = ObtenerDatosDummy();
-
                 RespuestaSP resSP = _dataAccess.TRAE_ESTADO_TFL(
                     p_def_tfl_ncorr,   // p_def_tfl_ncorr 
                     out DataTable dt
                 );
-
-                //===================>>>>
-                // Sección solo para pruebas
-
-                int probar = 0;
-
-                if (probar == 1)
-                {
-                    resSP.swt = 2;
-                    resSP.msg = "Probando mensaje";
-                }
-
-                //===================>>>>
 
                 var primeraFila = dt.Rows[0];
 
@@ -236,6 +181,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             RetornarJson(res);
         }
 
+
         [WebMethod]
         public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr, string p_apli_caplicacion)
         {
@@ -243,8 +189,6 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             try
             {
-                //throw new Exception("PRUEBA DETENER");
-
                 string p_audi_tusuario = usuario.rutNumero.ToString();
 
                 RespuestaSP resSP = _dataAccess.VOLVER_ATRAS(
@@ -252,8 +196,6 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                     p_apli_caplicacion,     // p_apli_caplicacion
                     p_audi_tusuario         // p_audi_tusuario 
                 );
-
-                var jsonString = JsonConvert.SerializeObject(resSP);
 
                 if (resSP.swt == 0 || resSP.swt == 1)
                     res.AgregarMensajeExito(resSP.msg);
@@ -272,8 +214,9 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             RetornarJson(res);
         }
 
+
         [WebMethod]
-        public static void ObtenerMensajeVolverAtras(string p_apli_caplicacion)
+        public static void MSG_VOLVER_ATRAS(string p_apli_caplicacion)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -290,33 +233,6 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             RetornarJson(res);
         }
-
-        /*
-        private static List<Card> ObtenerDatosDummy()
-        {
-            var listaObjetos = new List<Card>();
-
-            foreach (int x in new List<int>() { 1, 2, 3, 4 })
-            {
-                var items = new List<CardItem>();
-
-                foreach (var y in new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
-                {
-                    bool estaPublicada = (y <= 7);
-
-                    items.Add(new CardItem {
-                        estaPublicada = estaPublicada,
-                        puedeVolverAtras = estaPublicada,
-                        titulo = $"Pantalla {x}{y}" 
-                    });
-                }
-
-                listaObjetos.Add(new Card { titulo = $"Etapa {x}", items = items });
-            }
-
-            return listaObjetos;
-        } 
-        */
 
         private static void RetornarJson(object res)
         {

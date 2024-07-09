@@ -376,18 +376,6 @@ namespace MCTP_c_Modelos_de_Datos
 
             try
             {
-                //RespuestaSP resSP = this.DEF_AREA_SEL(
-                //    null,
-                //    null,
-                //    null,
-                //    null,
-                //    null,
-                //    null,
-                //    direccionSectorialNcorr,
-                //    9998,
-                //    out List<DEF_AREA_ENT> lista
-                //);
-
                 RespuestaSP resSP = this.DEF_AREA_SEL(
                     null,   // p_def_area_ncorr 
                     null,   // p_def_area_ccod 

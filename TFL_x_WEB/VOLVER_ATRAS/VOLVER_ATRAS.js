@@ -24,49 +24,6 @@ $(document).ready(function ()
 
 //#region Eventos Selectores Filtro
 
-/*
-$("#buscar [name='tfl']").on("change", () =>  // Obtener datos de la tfl seleccionada en el filtro
-{
-    let tfl = $("#buscar [name='tfl']").val();
-    let colFechaEfectiva = document.querySelector("#buscar [name='col-fecha-efectiva']");
-
-    if (validarNuloVacio(tfl))
-    {
-        $.ajax({
-            method: "POST",
-            url: "VOLVER_ATRAS.aspx/GetDatosDefTFL",
-            data: JSON.stringify({ def_tfl_ncorr: tfl }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            beforeSend: () => showLoading(),
-            success: (res) => {
-                if (res.status == 200) {
-                    let o = res.objeto;
-
-                    console.log(`def_tfl_nombre: ${o.def_tfl_nombre}`);
-                    console.log(`def_tfl_descrip: ${o.def_tfl_descrip}`);
-                    console.log(`def_tfl_version: ${o.def_tfl_version}`);
-                    console.log(`def_tfl_fefect: ${o.def_tfl_fefect}`);
-
-                    $("#buscar [name='fechaEfectiva']").html(o.def_tfl_fefect);
-                    colFechaEfectiva.style.visibility = "visible";     // Hace visible la fecha efectiva
-                }
-                else {
-                    mostrarErroresRespuestaBackend(res);
-                }
-            },
-            error: (XMLHttpRequest, textStatus, errorThrown) => {
-                toastr.error("Ocurrió un error al obtener los datos de DEF_TFL");
-            },
-            complete: () => hideLoading()
-        });
-    }
-    else {
-        colFechaEfectiva.style.visibility = "hidden";   // Oculta la fecha efectiva
-    }
-});
-*/
-
 $("#buscar [name='direccionSectorial']").on("change", () =>  // Al seleccionar un option para filtrar por DIR_SEC_VRA
 {
     let direccionSectorialNcorr = $("#buscar [name='direccionSectorial']").val();
@@ -78,7 +35,7 @@ $("#buscar [name='direccionSectorial']").on("change", () =>  // Al seleccionar u
     {
         $.ajax({
             method: "POST",
-            url: "VOLVER_ATRAS.aspx/GetCboDefArea",
+            url: "VOLVER_ATRAS.aspx/DEF_AREA_SEL",
             data: JSON.stringify({ direccionSectorialNcorr: direccionSectorialNcorr }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -86,7 +43,7 @@ $("#buscar [name='direccionSectorial']").on("change", () =>  // Al seleccionar u
             success: (res) =>
             {
                 if (res.status == 200)
-                    llenarCombobox(`#buscar [name="area"]`, res.objeto.cboCboDefArea);
+                    llenarCombobox(`#buscar [name="area"]`, res.objeto); 
                 else {
                     mostrarErroresRespuestaBackend(res);
                 }
@@ -122,7 +79,7 @@ function llenarSelectorDef_TFL()
 
     $.ajax({
         method: "POST",
-        url: "VOLVER_ATRAS.aspx/GetCboDefTFL",
+        url: "VOLVER_ATRAS.aspx/DEF_TFL_SEL",
         data: JSON.stringify({ defAreaNcorr, defPvigenciaTFL_ncorr }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -130,7 +87,7 @@ function llenarSelectorDef_TFL()
         success: (res) =>
         {
             if (res.status == 200)
-                llenarCombobox(`#buscar [name="tfl"]`, res.objeto.cboDefTFL);
+                llenarCombobox(`#buscar [name="tfl"]`, res.objeto);
             else {
                 mostrarErroresRespuestaBackend(res);
             }
@@ -352,7 +309,7 @@ function obtenerMensajeVolverAtras(apli_caplicacion)
     {
         $.ajax({
             method: "POST",
-            url: "VOLVER_ATRAS.aspx/ObtenerMensajeVolverAtras",
+            url: "VOLVER_ATRAS.aspx/MSG_VOLVER_ATRAS",
             data: JSON.stringify({ p_apli_caplicacion: apli_caplicacion }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -407,7 +364,9 @@ async function volverAtras()
 
         toastr.success(res.mensajeExito);
         $("#ModalVolverAtras").modal("hide");
-        buscar();
+
+        realizarNuevaBusqueda();
+        //buscar();  // Refresca el menu dinamico
     }
     catch (ex) {
         if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
