@@ -110,6 +110,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="CLONAR\CLONAR.aspx" />
+    <Content Include="CLONAR\CLONAR.js" />
     <Content Include="Contact.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -145,6 +147,13 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Auth\Permisos.cs" />
+    <Compile Include="CLONAR\CLONAR.aspx.cs">
+      <DependentUpon>CLONAR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CLONAR\CLONAR.aspx.designer.cs">
+      <DependentUpon>CLONAR.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

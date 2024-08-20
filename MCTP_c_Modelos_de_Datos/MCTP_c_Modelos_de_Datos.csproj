@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CLONAR_Modelo_Datos.cs" />
     <Compile Include="DEF_AREA_Modelo_Datos.cs" />
     <Compile Include="DEF_DIR_SEC_VRA_Modelo_Datos.cs" />
     <Compile Include="DEF_PVIGENCIA_TFL_Modelo_Datos.cs" />

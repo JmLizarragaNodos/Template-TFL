@@ -13,47 +13,47 @@ namespace TFL_x_WEB.Helpers
     public static class SesionHelper
     {
 
-        public static USUARIO_ENT GetUsuario()
-        {
-            try
-            {
-                userData objUserData = new userData();
-
-                string nombre = UppercaseWords(objUserData.dataUser.user_tnombres.ToLower());
-                string apepat = UppercaseWords(objUserData.dataUser.user_tape_paterno.ToLower());
-                string apemat = UppercaseWords(objUserData.dataUser.user_tape_materno.ToLower());
-
-                string rutNumero_String = objUserData.dataUser.user_nrut;
-                int v_pers_ncorr = Convert.ToInt32(objUserData.dataUser.pers_ncorr);
-                string sesi_ccod = objUserData.dataUser.sesi_ccod;
-
-                USUARIO_ENT usuario = new USUARIO_ENT()
-                {
-                    nombre = $"{nombre} {apepat} {apemat}",
-                    pers_ncorr = v_pers_ncorr,
-                    rutNumero = Int32.Parse(rutNumero_String),
-                    sesi_ccod = sesi_ccod
-                };
-
-                return usuario;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-
         //public static USUARIO_ENT GetUsuario()
         //{
-        //    return new USUARIO_ENT()
+        //    try
         //    {
-        //        nombre = "José Miguel (CAMBIAR ESTO)",
-        //        pers_ncorr = 3270864,
-        //        rutNumero = 17083122
-        //        //sesi_ccod = "168204134L262AAAI5ZAAAAABFTpAAAJ25232522023"
-        //    };
+        //        userData objUserData = new userData();
+
+        //        string nombre = UppercaseWords(objUserData.dataUser.user_tnombres.ToLower());
+        //        string apepat = UppercaseWords(objUserData.dataUser.user_tape_paterno.ToLower());
+        //        string apemat = UppercaseWords(objUserData.dataUser.user_tape_materno.ToLower());
+
+        //        string rutNumero_String = objUserData.dataUser.user_nrut;
+        //        int v_pers_ncorr = Convert.ToInt32(objUserData.dataUser.pers_ncorr);
+        //        string sesi_ccod = objUserData.dataUser.sesi_ccod;
+
+        //        USUARIO_ENT usuario = new USUARIO_ENT()
+        //        {
+        //            nombre = $"{nombre} {apepat} {apemat}",
+        //            pers_ncorr = v_pers_ncorr,
+        //            rutNumero = Int32.Parse(rutNumero_String),
+        //            sesi_ccod = sesi_ccod
+        //        };
+
+        //        return usuario;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
         //}
+
+
+        public static USUARIO_ENT GetUsuario()
+        {
+            return new USUARIO_ENT()
+            {
+                nombre = "José Miguel (CAMBIAR ESTO)",
+                pers_ncorr = 3270864,
+                rutNumero = 17083122
+                //sesi_ccod = "168204134L262AAAI5ZAAAAABFTpAAAJ25232522023"
+            };
+        }
 
         //public static USUARIO_ENT GetUsuario()
         //{
