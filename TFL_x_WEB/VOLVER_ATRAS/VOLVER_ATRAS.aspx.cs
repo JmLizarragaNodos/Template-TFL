@@ -59,6 +59,40 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         }
 
         [WebMethod]
+        public static void DEF_TFL_LEE(int def_tfl_ncorr)
+        {
+            RespuestaBackend res = new RespuestaBackend();
+
+            try
+            {
+                var dataAccess = new DEF_TFL_Modelo_Datos();
+
+                RespuestaSP resSP = dataAccess.GetDatosDefTFL(
+                    def_tfl_ncorr,
+                    out string def_tfl_nombre,
+                    out string def_tfl_descrip,
+                    out string def_tfl_version,
+                    out string def_tfl_fefect
+                );
+
+                if (resSP.swt == 0 || resSP.swt == 1)
+                    res.objeto = new { def_tfl_nombre, def_tfl_descrip, def_tfl_version, def_tfl_fefect };
+                else
+                {
+                    string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
+                    res.AgregarInternalServerError(msnError);
+                }
+            }
+            catch (Exception ex)
+            {
+                string msnError = LogException.WriteToEventLog(ex);
+                res.AgregarInternalServerError(msnError);
+            }
+
+            RetornarJson(res);
+        }
+
+        [WebMethod]
         public static void DEF_AREA_SEL(int direccionSectorialNcorr)
         {
             RespuestaBackend res = new RespuestaBackend();
@@ -126,14 +160,15 @@ namespace TFL_x_WEB.VOLVER_ATRAS
         }
 
         [WebMethod]
-        public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr)
+        public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr, int p_def_tfl_version)
         {
             RespuestaBackend res = new RespuestaBackend();
 
             try
             {
                 RespuestaSP resSP = _dataAccess.TRAE_ESTADO_TFL(
-                    p_def_tfl_ncorr,   // p_def_tfl_ncorr 
+                    p_def_tfl_ncorr,        // p_def_tfl_ncorr 
+                    p_def_tfl_version,      // p_def_tfl_version
                     out DataTable dt
                 );
 
@@ -183,7 +218,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
 
         [WebMethod]
-        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr, string p_apli_caplicacion)
+        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr, int p_def_tfl_version, string p_apli_caplicacion)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -193,6 +228,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
                 RespuestaSP resSP = _dataAccess.VOLVER_ATRAS(
                     p_def_tfl_ncorr,        // p_def_tfl_ncorr 
+                    p_def_tfl_version,      // p_def_tfl_version
                     p_apli_caplicacion,     // p_apli_caplicacion
                     p_audi_tusuario         // p_audi_tusuario 
                 );

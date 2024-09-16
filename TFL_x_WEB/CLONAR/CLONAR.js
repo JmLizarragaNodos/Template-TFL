@@ -1,6 +1,7 @@
 ﻿let usarDatosDummy = false;  // false;
 let paramsFiltro = {};
 let sePuedeModificar = true;
+this.p_def_tfl_version = 0;
 
 $(document).ready(function ()
 {
@@ -66,6 +67,31 @@ $("#buscar [name='area']").on("change", () =>  // Al seleccionar un option para 
 {
     document.querySelector("#buscar [name='col-fecha-efectiva']").style.visibility = "hidden";
     llenarSelectorDef_TFL();
+});
+
+$("#buscar [name='tfl']").on("change", (e) =>
+{
+    let def_tfl_ncorr = e.currentTarget.value;
+
+    if (validarNuloVacio(def_tfl_ncorr))
+    {
+        $.ajax({
+            method: "POST",
+            url: "CLONAR.aspx/DEF_TFL_LEE",
+            data: JSON.stringify({ def_tfl_ncorr }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: () => showLoading(),
+            success: (res) =>
+            {
+                this.p_def_tfl_version = res.objeto.def_tfl_version;
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                toastr.error("Ocurrió un error al obtener la información de la TFL");
+            },
+            complete: () => hideLoading()
+        });
+    }
 });
 
 function llenarSelectorDef_TFL()
@@ -187,7 +213,10 @@ function traeEstadoTFL(p_def_tfl_ncorr)
         $.ajax({
             method: "POST",
             url: "CLONAR.aspx/TRAE_ESTADO_TFL", 
-            data: JSON.stringify({ p_def_tfl_ncorr }),
+            data: JSON.stringify({
+                p_def_tfl_ncorr,
+                p_def_tfl_version: this.p_def_tfl_version
+            }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: (res) =>
@@ -281,7 +310,8 @@ async function clonar()  // clonar()
     try
     {
         let res = await CLONAR_BACKEND({
-            p_def_tfl_ncorr: $("#buscar [name='tfl']").val(),       
+            p_def_tfl_ncorr: $("#buscar [name='tfl']").val(),
+            p_def_tfl_version: this.p_def_tfl_version,
             p_nperiodo: periodoVigencia,                            
             p_def_tfl_nombre: nombreTFL,                            
             p_def_tfl_ncualficaciones: numeroMaximoCualificaciones, 

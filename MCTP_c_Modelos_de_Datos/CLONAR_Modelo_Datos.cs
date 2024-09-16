@@ -20,6 +20,81 @@ namespace MCTP_c_Modelos_de_Datos
             _pkgp_Size = Output_Size.Pkgp;
         }
 
+        public RespuestaSP CLONAR
+        (
+            int p_def_tfl_ncorr,
+            int p_def_tfl_version,
+            int p_nperiodo,
+            string p_def_tfl_nombre,
+            int p_def_tfl_ncualficaciones,
+            int p_def_tfl_nucl,
+            string p_def_tfl_fefect,
+            string p_def_tfl_descrip,
+            string p_audi_tusuario
+        )
+        {
+            try
+            {
+                IDataParameter[] param = new IDataParameter[16];
+
+                param[0] = new OracleParameter("p_def_tfl_ncorr", OracleDbType.Int32);
+                param[1] = new OracleParameter("p_def_tfl_version", OracleDbType.Int32);
+                param[2] = new OracleParameter("p_nperiodo", OracleDbType.Int32);
+                param[3] = new OracleParameter("p_def_tfl_nombre", OracleDbType.Varchar2);
+                param[4] = new OracleParameter("p_def_tfl_ncualficaciones", OracleDbType.Int32);
+                param[5] = new OracleParameter("p_def_tfl_nucl", OracleDbType.Int32);
+                param[6] = new OracleParameter("p_def_tfl_fefect", OracleDbType.Varchar2);
+                param[7] = new OracleParameter("p_def_tfl_descrip", OracleDbType.Varchar2);
+                param[8] = new OracleParameter("p_audi_tusuario", OracleDbType.Varchar2);
+                param[9] = new OracleParameter("outcur", OracleDbType.RefCursor);
+                param[10] = new OracleParameter("p_swt", OracleDbType.Int32);
+                param[11] = new OracleParameter("p_msg", OracleDbType.Varchar2, _msg_Size);
+                param[12] = new OracleParameter("p_sts", OracleDbType.Varchar2, _sts_Size);
+                param[13] = new OracleParameter("p_tbl", OracleDbType.Varchar2, _tbl_Size);
+                param[14] = new OracleParameter("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
+                param[15] = new OracleParameter("p_def_tfl_version_n", OracleDbType.Int32);
+
+                param[0].Value = p_def_tfl_ncorr;
+                param[1].Value = p_def_tfl_version;
+                param[2].Value = p_nperiodo;
+                param[3].Value = p_def_tfl_nombre;
+                param[4].Value = p_def_tfl_ncualficaciones;
+                param[5].Value = p_def_tfl_nucl;
+                param[6].Value = p_def_tfl_fefect;
+                param[7].Value = p_def_tfl_descrip;
+                param[8].Value = p_audi_tusuario;
+                param[9].Direction = ParameterDirection.Output;
+                param[10].Direction = ParameterDirection.Output;
+                param[11].Direction = ParameterDirection.Output;
+                param[12].Direction = ParameterDirection.Output;
+                param[13].Direction = ParameterDirection.Output;
+                param[14].Direction = ParameterDirection.Output;
+                param[15].Direction = ParameterDirection.Output;
+
+                DataTable dt = null;
+                ExecuteStoredProcedure("CLONAR_PKG.CLONAR", ref param, ref dt);
+
+                //if (dt != null && dt.Rows.Count > 0)
+                //{
+                //	outcur = (from DataRow x in dt.Rows select ObtenerObjeto(x)).ToList();
+                //}
+
+                return new RespuestaSP()
+                {
+                    swt = int.Parse(param[10].Value.ToString()),
+                    msg = param[11].Value.ToString(),
+                    sts = param[12].Value.ToString(),
+                    tbl = param[13].Value.ToString(),
+                    pkgp = param[14].Value.ToString(),
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /*
 		public RespuestaSP CLONAR
 		(
 			int p_def_tfl_ncorr,
@@ -53,45 +128,8 @@ namespace MCTP_c_Modelos_de_Datos
 				param.AddOutput("p_tbl", OracleDbType.Varchar2, _tbl_Size);
 				param.AddOutput("p_pkgp", OracleDbType.Varchar2, _pkgp_Size);
 
-				/* 
-				IDataParameter[] param = new IDataParameter[14]; 
-
-				param[0] = new OracleParameter("p_def_tfl_ncorr", OracleDbType.Int32); 
-				param[1] = new OracleParameter("p_nperiodo", OracleDbType.Int32); 
-				param[2] = new OracleParameter("p_def_tfl_nombre", OracleDbType.Varchar2); 
-				param[3] = new OracleParameter("p_def_tfl_ncualficaciones", OracleDbType.Int32); 
-				param[4] = new OracleParameter("p_def_tfl_nucl", OracleDbType.Int32); 
-				param[5] = new OracleParameter("p_def_tfl_fefect", OracleDbType.Varchar2); 
-				param[6] = new OracleParameter("p_def_tfl_descrip", OracleDbType.Varchar2); 
-				param[7] = new OracleParameter("p_audi_tusuario", OracleDbType.Varchar2); 
-				param[8] = new OracleParameter("outcur", OracleDbType.RefCursor); 
-				param[9] = new OracleParameter("p_swt", OracleDbType.Int32); 
-				param[10] = new OracleParameter("p_msg", OracleDbType.Varchar2, _msg_Size); 
-				param[11] = new OracleParameter("p_sts", OracleDbType.Varchar2, _sts_Size); 
-				param[12] = new OracleParameter("p_tbl", OracleDbType.Varchar2, _tbl_Size); 
-				param[13] = new OracleParameter("p_pkgp", OracleDbType.Varchar2, _pkgp_Size); 
-
-				param[0].Value = p_def_tfl_ncorr; 
-				param[1].Value = p_nperiodo; 
-				param[2].Value = p_def_tfl_nombre; 
-				param[3].Value = p_def_tfl_ncualficaciones; 
-				param[4].Value = p_def_tfl_nucl; 
-				param[5].Value = p_def_tfl_fefect; 
-				param[6].Value = p_def_tfl_descrip; 
-				param[7].Value = p_audi_tusuario; 
-				param[8].Direction = ParameterDirection.Output; 
-				param[9].Direction = ParameterDirection.Output; 
-				param[10].Direction = ParameterDirection.Output; 
-				param[11].Direction = ParameterDirection.Output; 
-				param[12].Direction = ParameterDirection.Output; 
-				param[13].Direction = ParameterDirection.Output; 
-				*/
-
 				DataTable dt = null;
 				ExecuteStoredProcedure("CLONAR_PKG.CLONAR", ref param, ref dt);
-
-				//if (dt != null && dt.Rows.Count > 0)
-				//	outcur = (from DataRow x in dt.Rows select ObtenerObjeto(x)).ToList();
 
 				return new RespuestaSP()
 				{
@@ -101,21 +139,12 @@ namespace MCTP_c_Modelos_de_Datos
 					tbl = param.ToStringValue("p_tbl"),
 					pkgp = param.ToStringValue("p_pkgp")
 				};
-				/* 
-				return new RespuestaSP() 
-				{ 
-					swt = int.Parse(param[9].Value.ToString()), 
-					msg = param[10].Value.ToString(), 
-					sts = param[11].Value.ToString(), 
-					tbl = param[12].Value.ToString(), 
-					pkgp = param[13].Value.ToString(), 
-				}; 
-				*/
 			}
 			catch (Exception ex)
 			{
 				throw new Exception(ex.Message);
 			}
 		}
-	}
+		*/
+    }
 }

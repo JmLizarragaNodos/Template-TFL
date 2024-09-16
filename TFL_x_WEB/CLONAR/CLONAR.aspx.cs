@@ -59,6 +59,40 @@ namespace TFL_x_WEB.CLONAR
         }
 
         [WebMethod]
+        public static void DEF_TFL_LEE(int def_tfl_ncorr)
+        {
+            RespuestaBackend res = new RespuestaBackend();
+
+            try
+            {
+                var dataAccess = new DEF_TFL_Modelo_Datos();
+
+                RespuestaSP resSP = dataAccess.GetDatosDefTFL(
+                    def_tfl_ncorr,
+                    out string def_tfl_nombre,
+                    out string def_tfl_descrip,
+                    out string def_tfl_version,
+                    out string def_tfl_fefect
+                );
+
+                if (resSP.swt == 0 || resSP.swt == 1)
+                    res.objeto = new { def_tfl_nombre, def_tfl_descrip, def_tfl_version, def_tfl_fefect };
+                else
+                {
+                    string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
+                    res.AgregarInternalServerError(msnError);
+                }
+            }
+            catch (Exception ex)
+            {
+                string msnError = LogException.WriteToEventLog(ex);
+                res.AgregarInternalServerError(msnError);
+            }
+
+            RetornarJson(res);
+        }
+
+        [WebMethod]
         public static void DEF_AREA_SEL(int direccionSectorialNcorr)
         {
             RespuestaBackend res = new RespuestaBackend();
@@ -113,7 +147,7 @@ namespace TFL_x_WEB.CLONAR
         }
 
         [WebMethod]
-        public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr)
+        public static void TRAE_ESTADO_TFL(int p_def_tfl_ncorr, int p_def_tfl_version)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -122,7 +156,8 @@ namespace TFL_x_WEB.CLONAR
                 VOLVER_ATRAS_Modelo_Datos dataAccess = new VOLVER_ATRAS_Modelo_Datos();
 
                 RespuestaSP resSP = dataAccess.TRAE_ESTADO_TFL(
-                    p_def_tfl_ncorr,   // p_def_tfl_ncorr 
+                    p_def_tfl_ncorr,    // p_def_tfl_ncorr 
+                    p_def_tfl_version,  // p_def_tfl_version
                     out DataTable dt
                 );
 
@@ -149,6 +184,7 @@ namespace TFL_x_WEB.CLONAR
         [WebMethod] 
         public static void CLONAR_BACKEND(  // Tiene el _BACKEND porque no se puede llamar igual que la clase
             int p_def_tfl_ncorr, 
+            int p_def_tfl_version,
             int p_nperiodo, 
             string p_def_tfl_nombre, 
             int p_def_tfl_ncualficaciones, 
@@ -161,14 +197,15 @@ namespace TFL_x_WEB.CLONAR
 
             try 
             {
-                res.AgregarMensajeExito("PRUEBA ÉXITO");
+                // res.AgregarMensajeExito("PRUEBA ÉXITO");
 
                 //====================>>>>
-                /*
+         
                 string p_audi_tusuario = usuario.rutNumero.ToString();
 
                 RespuestaSP resSP = _dataAccess.CLONAR(
                     p_def_tfl_ncorr,                // p_def_tfl_ncorr 
+                    p_def_tfl_version,              // p_def_tfl_version
                     p_nperiodo,                     // p_nperiodo 
                     p_def_tfl_nombre,               // p_def_tfl_nombre 
                     p_def_tfl_ncualficaciones,      // p_def_tfl_ncualficaciones 
@@ -185,7 +222,7 @@ namespace TFL_x_WEB.CLONAR
                     string msnError = LogException.LogException_pkg(resSP.swt, resSP.msg, resSP.sts, resSP.tbl, resSP.pkgp);
                     res.AgregarInternalServerError(msnError);
                 }
-                */
+
                 //====================>>>>
             }
             catch (Exception ex) 
