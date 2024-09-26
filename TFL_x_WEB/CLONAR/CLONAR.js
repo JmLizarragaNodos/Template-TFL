@@ -75,6 +75,9 @@ $("#buscar [name='tfl']").on("change", (e) =>
 
     if (validarNuloVacio(def_tfl_ncorr))
     {
+        this.p_def_tfl_version = findVersionFromSelect("#buscar [name='tfl']");
+
+        /*
         $.ajax({
             method: "POST",
             url: "CLONAR.aspx/DEF_TFL_LEE",
@@ -91,6 +94,7 @@ $("#buscar [name='tfl']").on("change", (e) =>
             },
             complete: () => hideLoading()
         });
+        */
     }
 });
 

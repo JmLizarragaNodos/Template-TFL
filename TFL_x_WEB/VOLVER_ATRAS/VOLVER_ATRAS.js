@@ -75,10 +75,16 @@ $("#buscar [name='tfl']").on("change", (e) =>
 
     if (validarNuloVacio(def_tfl_ncorr))
     {
+        this.p_def_tfl_version = findVersionFromSelect("#buscar [name='tfl']");
+
+        /*
         $.ajax({
             method: "POST",
             url: "VOLVER_ATRAS.aspx/DEF_TFL_LEE",
-            data: JSON.stringify({ def_tfl_ncorr }),
+            data: JSON.stringify({
+                def_tfl_ncorr,
+                p_def_tfl_version: this.p_def_tfl_version
+            }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             beforeSend: () => showLoading(),
@@ -91,6 +97,7 @@ $("#buscar [name='tfl']").on("change", (e) =>
             },
             complete: () => hideLoading()
         });
+        */
     }
 });
 

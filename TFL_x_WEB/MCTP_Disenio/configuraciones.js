@@ -1,6 +1,6 @@
 //importarArchivoJS("../MCTP_Disenio/sesion.js");
 
-console.log("AppVersion, 2024.09.16 v1.1");
+console.log("AppVersion, 2024.09.25 v1.1");
 
 $("#appBody").adjustFontSize();   // Incrementar Tamaño de Fuente
 
@@ -78,6 +78,20 @@ function encriptarHtml(cadena)
     // cadena = cadena.replace(/</g, '|lt;');
     // cadena = cadena.replace(/>/g, '|gt;');
     return cadena;
+}
+
+function findVersionFromSelect(querySelector)  // findVersionFromSelect("#buscar [name='tfl']");
+{
+    let texto = $(`${querySelector} option:selected`).text();   // $("#buscar [name='tfl'] option:selected").text();
+
+    let match = texto.match(/Versión:\s*(\d+)/); 
+    let version = match ? match[1] : null;
+
+    if (version == null || version == "" || isNaN(version))
+        return console.log("No se pudo obtener la versión de la TFL");
+
+    let retorno = parseInt(version);
+    return retorno;
 }
 
 //===================================================================================================>>>>>

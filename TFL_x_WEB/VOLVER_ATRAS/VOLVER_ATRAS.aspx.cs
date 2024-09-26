@@ -58,8 +58,9 @@ namespace TFL_x_WEB.VOLVER_ATRAS
             }
         }
 
+        /*
         [WebMethod]
-        public static void DEF_TFL_LEE(int def_tfl_ncorr)
+        public static void DEF_TFL_LEE(int def_tfl_ncorr, int p_def_tfl_version)
         {
             RespuestaBackend res = new RespuestaBackend();
 
@@ -68,7 +69,8 @@ namespace TFL_x_WEB.VOLVER_ATRAS
                 var dataAccess = new DEF_TFL_Modelo_Datos();
 
                 RespuestaSP resSP = dataAccess.GetDatosDefTFL(
-                    def_tfl_ncorr,
+                    def_tfl_ncorr,                  // p_kya 
+                    p_def_tfl_version,              // p_def_tfl_version 
                     out string def_tfl_nombre,
                     out string def_tfl_descrip,
                     out string def_tfl_version,
@@ -91,6 +93,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
             RetornarJson(res);
         }
+        */
 
         [WebMethod]
         public static void DEF_AREA_SEL(int direccionSectorialNcorr)

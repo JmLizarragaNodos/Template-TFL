@@ -58,6 +58,7 @@ namespace TFL_x_WEB.CLONAR
             }
         }
 
+        /*
         [WebMethod]
         public static void DEF_TFL_LEE(int def_tfl_ncorr)
         {
@@ -67,7 +68,7 @@ namespace TFL_x_WEB.CLONAR
             {
                 var dataAccess = new DEF_TFL_Modelo_Datos();
 
-                RespuestaSP resSP = dataAccess.GetDatosDefTFL(
+                RespuestaSP resSP = dataAccess.GetDatosDefTFL__INCORRECTO(
                     def_tfl_ncorr,
                     out string def_tfl_nombre,
                     out string def_tfl_descrip,
@@ -91,6 +92,7 @@ namespace TFL_x_WEB.CLONAR
 
             RetornarJson(res);
         }
+        */
 
         [WebMethod]
         public static void DEF_AREA_SEL(int direccionSectorialNcorr)
