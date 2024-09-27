@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="ADMINISTRACION_TFL\ADMINISTRACION_TFL.aspx" />
     <Content Include="CLONAR\CLONAR.aspx" />
     <Content Include="CLONAR\CLONAR.js" />
     <Content Include="Contact.aspx" />
@@ -137,6 +138,13 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADMINISTRACION_TFL\ADMINISTRACION_TFL.aspx.cs">
+      <DependentUpon>ADMINISTRACION_TFL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ADMINISTRACION_TFL\ADMINISTRACION_TFL.aspx.designer.cs">
+      <DependentUpon>ADMINISTRACION_TFL.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>

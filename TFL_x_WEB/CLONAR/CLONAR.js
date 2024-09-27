@@ -23,6 +23,10 @@ $(document).ready(function ()
     }
 });
 
+function regresar() {
+    window.location.href = "../ADMINISTRACION_TFL/ADMINISTRACION_TFL.aspx";
+}
+
 //#region Eventos Selectores Filtro
 
 $("#buscar [name='direccionSectorial']").on("change", () =>  // Al seleccionar un option para filtrar por DIR_SEC_VRA

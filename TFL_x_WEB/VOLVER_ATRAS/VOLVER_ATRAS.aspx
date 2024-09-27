@@ -255,7 +255,7 @@
 
     </header>
 
-    <nav class="navbar toggle-navbar-lg">
+<%--    <nav class="navbar toggle-navbar-lg">
       <div class="container">
         <button class="d-lg-none d-flex align-items-center pl-0" id="toggle-navbar" aria-label="Ver Menu"
           onclick="openNav()">
@@ -277,7 +277,7 @@
           </li>
         </ul>
       </div>
-    </nav>
+    </nav>--%>
 
     <!-- Loading Overlay -->
     <div class="loading-backdrop" id="loadingOverlay">
@@ -366,36 +366,22 @@
                 </div>
 
             </div>
-                    
-            <div class="row mb-4">
 
-                <div class="col p-0 d-flex justify-content-end">
-
-                <button onclick="buscar()" class="btn btn-default waves-effect waves-light">
-                    <span>Buscar TFL</span>
-                </button>
-
+            <div class="row mt-5">
+                <div class="col d-flex justify-content-start">
+                    <button type="button" onclick="regresar()" class="btn btn-outline waves-effect waves-light">
+                        Volver a Menú Principal
+                    </button>
                 </div>
-
-            </div>
+                <div class="col d-flex justify-content-end">
+                    <button type="button" onclick="buscar()" class="btn btn-default waves-effect waves-light">
+                        Buscar TFL
+                    </button>
+                </div>
+            </div>          
                     
           </div>
 
-          <%--  
-          <div class="card-footer">
-
-            <div class="row flex-row my-4">
-
-              <div class="col col-md-6  d-flex justify-content-start">
-                <a class="btn btn-outline waves-effect waves-light" href="../Menu_Operacional/Menu_Operacional.aspx">
-                  <span>Volver</span>
-                </a>
-              </div>
-
-            </div>
-
-          </div>
-          --%>
 
         </div>
 
