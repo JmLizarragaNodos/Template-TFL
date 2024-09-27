@@ -241,7 +241,11 @@ namespace TFL_x_WEB.Helpers
             TFL_MODULOS_ACCESOS_Modelo_Datos dataAccess = new TFL_MODULOS_ACCESOS_Modelo_Datos();
 
             RespuestaSP resSP = dataAccess.TFL_MODULOS_ACCESOS(
-                "TFL", "ETAPA1", rut, p_cacplicacion, out List<TFL_MODULOS_ACCESOS_ENT> datosDB
+                "TFL",
+                "TFL",      // "ETAPA1",     // Aca va el código de la Etapa
+                rut, 
+                p_cacplicacion, 
+                out List<TFL_MODULOS_ACCESOS_ENT> datosDB
             );
 
             if (resSP.swt == 0 || resSP.swt == 1)

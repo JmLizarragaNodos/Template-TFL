@@ -43,40 +43,8 @@ namespace TFL_x_WEB
                     {
                         esAjax = true;
 
-                        //===============================================>>>>>
-
                         if (nombreClase == "Login")  // Permitir renovar sesión
                             return;
-
-                        //===============================================>>>>>
-                        // Prueba para usar Token de Autenticación
-                        /*
-                        if (nombreClase == "Login")  // Permitir Login
-                            return;
-
-                        // Validar Token
-
-                        string bearerToken = HttpContext.Current.Request.Headers["X-Bearer-Token"];
-
-                        if (!string.IsNullOrEmpty(bearerToken))
-                        {
-                            bool estaEncriptado = CryptoHelper.TryDesencriptar(bearerToken, out var jsonStringDesencriptado);
-
-                            if (estaEncriptado)
-                            {
-                                // Convertir de nuevo a objeto
-                                var objetoObtenido = JsonConvert.DeserializeObject<InfoTFL>(jsonStringDesencriptado);
-
-                                // Hacer algo con el objeto obtenido
-                                Console.WriteLine(objetoObtenido.usuario.nombre);
-                            }
-                            else
-                            {
-                                Console.WriteLine("jsonStringEncriptado no tiene el formato correcto");
-                            }
-                        }
-                        */
-                        //===============================================>>>>>
 
                         string tipo = ObtenerUltimosCaracteres(nombreMetodo.ToUpper(), 4);
 
@@ -115,20 +83,22 @@ namespace TFL_x_WEB
                     }
                     else  // Si no es una llamada por Ajax
                     {
-                        /*
-                        if (nombreClase != "Menu_Definiciones" && nombreClase != "Menu_Operacional")
+                        if (
+                            nombreClase != "ADMINISTRACION_TFL" &&
+                            nombreClase != "Menu_Definiciones" && 
+                            nombreClase != "Menu_Operacional"
+                        )
                         {
                             if (!SesionHelper.EstaAutorizado(nombreClase, Permisos.SELECT, Permisos.UPDATE))
                             {
                                 string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
                                     Request.ApplicationPath.TrimEnd('/');
 
-                                Response.Redirect($"{baseUrl}/Menu_Definiciones/Menu_Definiciones.aspx");
+                                Response.Redirect($"{baseUrl}/ADMINISTRACION_TFL/ADMINISTRACION_TFL.aspx");
 
                                 // Response.Redirect("https://localhost:44300/Menu_Definiciones/Menu_Definiciones.aspx");
                             }
                         }
-                        */
                     }
                 }
             }

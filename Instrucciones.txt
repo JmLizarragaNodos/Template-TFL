@@ -2,11 +2,44 @@
 Usar esto para evitar problemas con Checkmarx:
 	Newtonsoft.Json 13.0.3
 	
-=========================================================================>>>>>
+-- =========================================================================>>>>>
+-- Normalmente al llamar al TFL_MODULOS_ACCESOS_PKG.TFL_MODULOS_ACCESOS, en el p_modulos_sist_ccod se envia el código de 
+-- la etapa. Pero en este caso le envío 'TFL', ya que por lo que vi ese codigo aun no está.
+-- Se llama de esta manera al procedimiento en la apliación:
 
-Rutas en localhost:
-https://localhost:44335/Menu_Definiciones/Menu_Definiciones.aspx
-https://localhost:44335/VOLVER_ATRAS/VOLVER_ATRAS.aspx
+SET SERVEROUTPUT ON; 
 
-IIS:
-https://siga.desa.inacap.cl/TFL/VOLVER_ATRAS/VOLVER_ATRAS.aspx
+DECLARE 
+    swt number; 
+    msg varchar2(200); 
+    sts varchar2(200); 
+    tbl varchar2(200); 
+    pkgp varchar2(200); 
+    outcur SYS_REFCURSOR; 
+BEGIN 
+    TFL_MODULOS_ACCESOS_PKG.TFL_MODULOS_ACCESOS( 
+        p_sist_csistema => 'TFL', 
+        p_modulos_sist_ccod => 'TFL',  -- 'ETAPA1'  
+        p_rut_usuario => 16420925, 
+        p_cacplicacion => 'TFL_VOLVER_ATRAS', 
+        outcur => outcur, 
+        p_swt => swt, 
+        p_msg => msg, 
+        p_sts => sts, 
+        p_tbl => tbl, 
+        p_pkgp => pkgp
+    ); 
+ 
+    IF outcur IS NOT NULL THEN 
+        DBMS_SQL.RETURN_RESULT(outcur); 
+    ELSE 
+        dbms_output.put_line('El cursor outcur no trae información'); 
+        dbms_output.put_line('swt: ' || swt); 
+        dbms_output.put_line('msg: ' || msg); 
+        dbms_output.put_line('sts: ' || sts); 
+        dbms_output.put_line('tbl: ' || tbl); 
+        dbms_output.put_line('pkgp: ' || pkgp); 
+    END IF; 
+END; 
+
+-- =========================================================================>>>>>
