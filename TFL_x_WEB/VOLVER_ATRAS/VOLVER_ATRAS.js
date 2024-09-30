@@ -399,7 +399,7 @@ async function volverAtras()
     showLoading();
 
     try {
-        let res = await VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr, p_apli_caplicacion);
+        let res = await VOLVER_ATRAS_GRABAR(p_def_tfl_ncorr, p_apli_caplicacion);
         console.log(res);
 
         toastr.success(res.mensajeExito);
@@ -415,13 +415,13 @@ async function volverAtras()
     finally { hideLoading() }
 }
 
-function VOLVER_ATRAS_BACKEND(p_def_tfl_ncorr, p_apli_caplicacion)
+function VOLVER_ATRAS_GRABAR(p_def_tfl_ncorr, p_apli_caplicacion)
 {
     return new Promise((resolve, reject) => 
     {
         $.ajax({
             method: "POST",
-            url: "VOLVER_ATRAS.aspx/VOLVER_ATRAS_BACKEND",
+            url: "VOLVER_ATRAS.aspx/VOLVER_ATRAS_GRABAR",
             data: JSON.stringify({
                 p_def_tfl_ncorr,
                 p_def_tfl_version: this.p_def_tfl_version,

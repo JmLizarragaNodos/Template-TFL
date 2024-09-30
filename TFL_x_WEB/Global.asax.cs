@@ -1,6 +1,7 @@
 ﻿using MCTP_a_Exception;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
@@ -73,19 +74,28 @@ namespace TFL_x_WEB
                             RespuestaBackend resError = new RespuestaBackend();
                             resError.NoAutorizado();
 
+                            // string p_cacplicacion = $"TFL_{nombreTabla}"; 
+
+                            resError.informacionExtra = JsonConvert.SerializeObject(new
+                            {
+                                SELECT = Permisos.SELECT,
+                                UPDATE = Permisos.UPDATE,
+                                p_cacplicacion = $"TFL_{nombreClase}"
+                            });
+
                             string json = JsonConvert.SerializeObject(resError);
                             HttpContext.Current.Response.Clear();
                             HttpContext.Current.Response.ContentType = "application/json; charset=utf-8";
                             HttpContext.Current.Response.Write(json);
                             HttpContext.Current.Response.Flush();
-                            HttpContext.Current.Response.End();
+                            HttpContext.Current.ApplicationInstance.CompleteRequest();
                         }
                     }
                     else  // Si no es una llamada por Ajax
                     {
                         if (
                             nombreClase != "ADMINISTRACION_TFL" &&
-                            nombreClase != "Menu_Definiciones" && 
+                            nombreClase != "Menu_Definiciones" &&
                             nombreClase != "Menu_Operacional"
                         )
                         {

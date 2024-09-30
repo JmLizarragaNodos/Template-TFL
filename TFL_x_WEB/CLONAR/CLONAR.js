@@ -317,7 +317,7 @@ async function clonar()  // clonar()
 
     try
     {
-        let res = await CLONAR_BACKEND({
+        let res = await CLONAR_GRABAR({
             p_def_tfl_ncorr: $("#buscar [name='tfl']").val(),
             p_def_tfl_version: this.p_def_tfl_version,
             p_nperiodo: periodoVigencia,                            
@@ -338,13 +338,13 @@ async function clonar()  // clonar()
     finally { hideLoading() }
 }
 
-function CLONAR_BACKEND(objeto = {})
+function CLONAR_GRABAR(objeto = {})
 {
     return new Promise((resolve, reject) => 
     {
         $.ajax({
             method: "POST",
-            url: "CLONAR.aspx/CLONAR_BACKEND",
+            url: "CLONAR.aspx/CLONAR_GRABAR",
             data: JSON.stringify(objeto),
             contentType: "application/json; charset=utf-8",
             dataType: "json",

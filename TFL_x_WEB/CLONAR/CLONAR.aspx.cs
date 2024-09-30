@@ -184,7 +184,7 @@ namespace TFL_x_WEB.CLONAR
         }
 
         [WebMethod] 
-        public static void CLONAR_BACKEND(  // Tiene el _BACKEND porque no se puede llamar igual que la clase
+        public static void CLONAR_GRABAR(
             int p_def_tfl_ncorr, 
             int p_def_tfl_version,
             int p_nperiodo, 

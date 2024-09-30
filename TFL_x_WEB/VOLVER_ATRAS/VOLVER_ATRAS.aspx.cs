@@ -221,7 +221,7 @@ namespace TFL_x_WEB.VOLVER_ATRAS
 
 
         [WebMethod]
-        public static void VOLVER_ATRAS_BACKEND(int p_def_tfl_ncorr, int p_def_tfl_version, string p_apli_caplicacion)
+        public static void VOLVER_ATRAS_GRABAR(int p_def_tfl_ncorr, int p_def_tfl_version, string p_apli_caplicacion)
         {
             RespuestaBackend res = new RespuestaBackend();
 
