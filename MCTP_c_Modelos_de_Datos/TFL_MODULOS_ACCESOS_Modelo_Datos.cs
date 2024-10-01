@@ -54,6 +54,8 @@ namespace MCTP_c_Modelos_de_Datos
 		{
 			outcur = new List<TFL_MODULOS_ACCESOS_ENT>();
 
+			// p_modulos_sist_ccod = "ETAPA_ADMINISTRACION_TFL";
+
 			try
 			{
 				IDataParameter[] param = new IDataParameter[10];

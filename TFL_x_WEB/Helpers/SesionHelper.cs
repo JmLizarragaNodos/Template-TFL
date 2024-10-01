@@ -242,7 +242,7 @@ namespace TFL_x_WEB.Helpers
 
             RespuestaSP resSP = dataAccess.TFL_MODULOS_ACCESOS(
                 "TFL",
-                "TFL",      // "ETAPA1",     // Aca va el código de la Etapa
+                "ETAPA_ADMINISTRACION_TFL",      // "ETAPA1",     // Aca va el código de la Etapa
                 rut, 
                 p_cacplicacion, 
                 out List<TFL_MODULOS_ACCESOS_ENT> datosDB
