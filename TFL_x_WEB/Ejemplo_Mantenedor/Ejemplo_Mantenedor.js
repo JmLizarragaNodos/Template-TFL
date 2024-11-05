@@ -64,6 +64,7 @@ async function construirGrilla()
     document.querySelector("#seccionGrilla").style.display = "block";
     document.querySelector("#seccionInsertar").style.display = "none";
 
+    showLoading();
     limpiarFormulario("#formCrear");
 
     try
