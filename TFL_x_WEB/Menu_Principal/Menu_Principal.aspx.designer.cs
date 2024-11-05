@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace TFL_x_WEB.ADMINISTRACION_TFL
+namespace TFL_x_WEB.Menu_Principal
 {
 
 
-    public partial class ADMINISTRACION_TFL
+    public partial class Menu_Principal
     {
     }
 }

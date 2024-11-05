@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace TFL_x_WEB.CLONAR
+namespace TFL_x_WEB.Ejemplo_Mantenedor
 {
 
 
-    public partial class CLONAR
+    public partial class Ejemplo_Mantenedor
     {
     }
 }

@@ -68,6 +68,31 @@ function mostrarErroresRespuestaBackend(res)
     }
 }
 
+function httpPost(url, params = null, salida = "objeto")
+{
+    let data = (params != null) ? 
+        JSON.stringify(params) : null;
+
+    return new Promise((resolve, reject) => 
+    {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: (res) =>
+            {
+                if (res.status == 200)
+                    resolve(res[salida]);
+                else 
+                    reject(res);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => reject("Ocurrió un error")
+        });
+    });
+}
+
 function encriptarHtml(cadena)
 {
     cadena = cadena.replace(/&/g, '/amp/');  // Reeemplazar el &

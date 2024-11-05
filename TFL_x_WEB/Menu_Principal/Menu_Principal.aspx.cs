@@ -3,13 +3,13 @@ using System;
 using System.Web.UI;
 using TFL_x_WEB.Helpers;
 
-namespace TFL_x_WEB.ADMINISTRACION_TFL
+namespace TFL_x_WEB.Menu_Principal
 {
-    public partial class ADMINISTRACION_TFL : Page
+    public partial class Menu_Principal : Page
     {
         protected static USUARIO_ENT usuario { get; set; } = new USUARIO_ENT();
 
-        public ADMINISTRACION_TFL()
+        public Menu_Principal()
         {
 
         }

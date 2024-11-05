@@ -110,13 +110,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="ADMINISTRACION_TFL\ADMINISTRACION_TFL.aspx" />
-    <Content Include="CLONAR\CLONAR.aspx" />
-    <Content Include="CLONAR\CLONAR.js" />
     <Content Include="Contact.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Ejemplo_Mantenedor\Ejemplo_Mantenedor.aspx" />
+    <Content Include="Ejemplo_Mantenedor\Ejemplo_Mantenedor.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Guardar_Borrador_y_Publicar\Guardar_Borrador_y_Publicar.aspx" />
+    <Content Include="Guardar_Borrador_y_Publicar\Guardar_Borrador_y_Publicar.js" />
     <Content Include="MCTP_Disenio\bootstrap.min.js" />
     <Content Include="MCTP_Disenio\chosen.jquery.js" />
     <Content Include="MCTP_Disenio\configuraciones.js" />
@@ -128,23 +129,15 @@
     <Content Include="MCTP_Disenio\popper.min.js" />
     <Content Include="MCTP_Disenio\sesion.js" />
     <Content Include="MCTP_Disenio\xlsx.full.min.js" />
+    <Content Include="Menu_Principal\Menu_Principal.aspx" />
     <Content Include="Properties\PublishProfiles\FolderProfile.pubxml.user" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="VOLVER_ATRAS\VOLVER_ATRAS.aspx" />
-    <Content Include="VOLVER_ATRAS\VOLVER_ATRAS.js" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ADMINISTRACION_TFL\ADMINISTRACION_TFL.aspx.cs">
-      <DependentUpon>ADMINISTRACION_TFL.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ADMINISTRACION_TFL\ADMINISTRACION_TFL.aspx.designer.cs">
-      <DependentUpon>ADMINISTRACION_TFL.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -155,13 +148,6 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Auth\Permisos.cs" />
-    <Compile Include="CLONAR\CLONAR.aspx.cs">
-      <DependentUpon>CLONAR.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CLONAR\CLONAR.aspx.designer.cs">
-      <DependentUpon>CLONAR.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,13 +163,35 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dto\MenuAcceso.cs" />
+    <Compile Include="Ejemplo_Mantenedor\Ejemplo_Mantenedor.aspx.cs">
+      <DependentUpon>Ejemplo_Mantenedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ejemplo_Mantenedor\Ejemplo_Mantenedor.aspx.designer.cs">
+      <DependentUpon>Ejemplo_Mantenedor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Guardar_Borrador_y_Publicar\Guardar_Borrador_y_Publicar.aspx.cs">
+      <DependentUpon>Guardar_Borrador_y_Publicar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Guardar_Borrador_y_Publicar\Guardar_Borrador_y_Publicar.aspx.designer.cs">
+      <DependentUpon>Guardar_Borrador_y_Publicar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\ExtensionHelper.cs" />
+    <Compile Include="Helpers\InfoUsuarioHelper.cs" />
     <Compile Include="Helpers\LinqHelper.cs" />
     <Compile Include="Helpers\SesionHelper.cs" />
+    <Compile Include="Menu_Principal\Menu_Principal.aspx.cs">
+      <DependentUpon>Menu_Principal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Menu_Principal\Menu_Principal.aspx.designer.cs">
+      <DependentUpon>Menu_Principal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -205,13 +213,6 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="VOLVER_ATRAS\VOLVER_ATRAS.aspx.cs">
-      <DependentUpon>VOLVER_ATRAS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="VOLVER_ATRAS\VOLVER_ATRAS.aspx.designer.cs">
-      <DependentUpon>VOLVER_ATRAS.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace TFL_x_WEB.VOLVER_ATRAS
+namespace TFL_x_WEB.Guardar_Borrador_y_Publicar
 {
 
 
-    public partial class VOLVER_ATRAS
+    public partial class Guardar_Borrador_y_Publicar
     {
     }
 }

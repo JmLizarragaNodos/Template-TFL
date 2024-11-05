@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ADMINISTRACION_TFL.aspx.cs" Inherits="TFL_x_WEB.ADMINISTRACION_TFL.ADMINISTRACION_TFL" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Menu_Principal.aspx.cs" Inherits="TFL_x_WEB.Menu_Principal.Menu_Principal" %>
 
 <!DOCTYPE html>
 <html lang="en"> 
@@ -205,15 +205,20 @@
                         <div class="col-12">
                           <ul class="list-card">
                             <li>
-                                <a href="../VOLVER_ATRAS/VOLVER_ATRAS.aspx">
-                                    1. Modificar TFL
+                                <a href="../Guardar_Borrador_y_Publicar/Guardar_Borrador_y_Publicar.aspx">
+                                    Guardar Borrador y Publicar
                                 </a>
                             </li>
                             <li>
+                                <a href="../Ejemplo_Mantenedor/Ejemplo_Mantenedor.aspx">
+                                    Ejemplo Mantenedor
+                                </a>
+                            </li>
+                            <%--<li>
                                 <a href="../CLONAR/CLONAR.aspx">
                                     2. Clonar TFL(Generar una nueva TFL) >
                                 </a>
-                            </li>
+                            </li>--%>
                           </ul>
                         </div>
 
